@@ -1,4 +1,4 @@
-/** Compiled by the Randori compiler v0.2.4 on Tue May 28 14:38:05 CEST 2013 */
+/** Compiled by the Randori compiler v0.2.4 on Fri May 31 15:00:32 CEST 2013 */
 
 if (typeof mediators == "undefined")
 	var mediators = {};
@@ -14,17 +14,23 @@ randori.behaviors.AbstractMediator.call(this);
 };
 
 mediators.IndexMediator.prototype.onRegister = function() {
-	this.menuLeft.set_items([{label:"Animals", url:"views\/products\/animals.html"}, {label:"Misc", url:"views\/products\/misc.html"}, {label:"Closed Orders", url:"views\/products\/animals.html"}, {label:"Open Orders", url:"views\/products\/animals.html"}, {label:"Processing Orders", url:"views\/products\/animals.html"}]);
-	this.menuLeft.itemClick.add($createStaticDelegate(this, this.menuClickHandler));
+	this.menuLeft.set_dataProvider(this.getDefaultMenuItems());
+	this.menuLeft.itemClicked.add($createStaticDelegate(this, this.menuClickHandler));
 	this.appBus.rowDoubleClicked.add($createStaticDelegate(this, this.handleAddTab));
 	this.appBus.tabClicked.add($createStaticDelegate(this, this.handleTabClicked));
 	this.appBus.allTabsRemoved.add($createStaticDelegate(this, this.allTabsRemovedHandler));
+	this.selectDefaultView();
 };
 
-mediators.IndexMediator.prototype.menuClickHandler = function(event) {
-	var button = jQuery(event.target);
-	var viewUrl = button.attr("data-link");
-	var promise = this.loadView(viewUrl);
+mediators.IndexMediator.prototype.selectDefaultView = function() {
+	this.menuLeft.selectButton("animalsBtn");
+	var promise = this.loadView("views\/products\/animals.html");
+	promise.then($createStaticDelegate(this, this.viewAddedHandler));
+	this.tabBar.deselectAllTabs();
+};
+
+mediators.IndexMediator.prototype.menuClickHandler = function(item) {
+	var promise = this.loadView(item.url);
 	promise.then($createStaticDelegate(this, this.viewAddedHandler));
 	this.tabBar.deselectAllTabs();
 };
@@ -53,7 +59,10 @@ mediators.IndexMediator.prototype.viewAddedHandler = function(mediator) {
 };
 
 mediators.IndexMediator.prototype.onDeregister = function() {
+	this.menuLeft.itemClicked.remove($createStaticDelegate(this, this.menuClickHandler));
 	this.appBus.rowDoubleClicked.remove($createStaticDelegate(this, this.handleAddTab));
+	this.appBus.tabClicked.remove($createStaticDelegate(this, this.handleTabClicked));
+	this.appBus.allTabsRemoved.remove($createStaticDelegate(this, this.allTabsRemovedHandler));
 };
 
 mediators.IndexMediator.prototype.handleAddTab = function(selectedAnimal) {
@@ -73,6 +82,26 @@ mediators.IndexMediator.prototype.handleTabClicked = function(tab, data) {
 
 mediators.IndexMediator.prototype.allTabsRemovedHandler = function(e) {
 	this.loadView("views\/products\/animals.html");
+};
+
+mediators.IndexMediator.prototype.getDefaultMenuItems = function() {
+	var animalsBtn = {};
+	animalsBtn.id = "animalsBtn";
+	animalsBtn.label = "Animals";
+	animalsBtn.url = "views\/products\/animals.html";
+	var miscBtn = {};
+	miscBtn.id = "miscBtn";
+	miscBtn.label = "Misc";
+	miscBtn.url = "views\/products\/misc.html";
+	var closedOrdersBtn = {};
+	closedOrdersBtn.id = "closedOrdersBtn";
+	closedOrdersBtn.label = "Closed Orders";
+	closedOrdersBtn.url = "views\/products\/animals.html";
+	var processingOrdersBtn = {};
+	processingOrdersBtn.id = "processingOrdersBtn";
+	processingOrdersBtn.label = "Processing Orders";
+	processingOrdersBtn.url = "views\/products\/animals.html";
+	return [animalsBtn, miscBtn, closedOrdersBtn, processingOrdersBtn];
 };
 
 $inherit(mediators.IndexMediator, randori.behaviors.AbstractMediator);

@@ -7,13 +7,13 @@ import eventBus.AppEventBus;
 import mediators.products.AnimalDetailMediator;
 
 import models.Animal;
+import models.MenuListItem;
 
 import randori.async.Promise;
 import randori.behaviors.AbstractMediator;
 import randori.behaviors.ViewStack;
 import randori.jquery.Event;
 import randori.jquery.JQuery;
-import randori.jquery.JQueryStatic;
 import randori.webkit.page.Window;
 
 public class IndexMediator extends AbstractMediator {
@@ -27,31 +27,32 @@ public class IndexMediator extends AbstractMediator {
     private var clickedAnimal:Animal;
     private var views:Array;
 
-    public function IndexMediator( ) {}
+    public function IndexMediator( ) {
+
+    }
 
     override protected function onRegister():void {
+        menuLeft.dataProvider = getDefaultMenuItems();
 
-        menuLeft.items = [
-            {label:"Animals",url:"views/products/animals.html"},
-            {label:"Misc",url:"views/products/misc.html"},
-            {label:"Closed Orders",url:"views/products/animals.html"},
-            {label:"Open Orders",url:"views/products/animals.html"},
-            {label:"Processing Orders",url:"views/products/animals.html"},
-        ];
-
-        menuLeft.itemClick.add(menuClickHandler);
-
+        menuLeft.itemClicked.add(menuClickHandler);
         appBus.rowDoubleClicked.add( handleAddTab );
         appBus.tabClicked.add( handleTabClicked );
         appBus.allTabsRemoved.add( allTabsRemovedHandler );
 
+        selectDefaultView();
     }
 
-    private function menuClickHandler( event:Event ):void {
-        var button:JQuery = JQueryStatic.J(event.target);
-        var viewUrl:String = button.attr1("data-link");
+    private function selectDefaultView():void {
+        menuLeft.selectButton("animalsBtn");
 
-        var promise:Promise = loadView( viewUrl );
+        var promise:Promise = loadView( "views/products/animals.html" );
+        promise.then( viewAddedHandler );
+
+        tabBar.deselectAllTabs();
+    }
+
+    private function menuClickHandler( item:MenuListItem ):void {
+        var promise:Promise = loadView( item.url );
         promise.then( viewAddedHandler );
 
         tabBar.deselectAllTabs();
@@ -83,8 +84,11 @@ public class IndexMediator extends AbstractMediator {
     }
 
     override protected function onDeregister():void {
-
+        menuLeft.itemClicked.remove(menuClickHandler);
         appBus.rowDoubleClicked.remove( handleAddTab );
+        appBus.tabClicked.remove( handleTabClicked );
+        appBus.allTabsRemoved.remove( allTabsRemovedHandler );
+
     }
 
     private function handleAddTab ( selectedAnimal:Animal ):void{
@@ -106,5 +110,25 @@ public class IndexMediator extends AbstractMediator {
         loadView("views/products/animals.html");
     }
 
+    private function getDefaultMenuItems():Array {
+        var animalsBtn:MenuListItem = new MenuListItem();
+        animalsBtn.id = "animalsBtn";
+        animalsBtn.label = "Animals";
+        animalsBtn.url = "views/products/animals.html";
+        var miscBtn:MenuListItem = new MenuListItem();
+        miscBtn.id = "miscBtn";
+        miscBtn.label = "Misc";
+        miscBtn.url = "views/products/misc.html";
+        var closedOrdersBtn:MenuListItem = new MenuListItem();
+        closedOrdersBtn.id = "closedOrdersBtn";
+        closedOrdersBtn.label = "Closed Orders";
+        closedOrdersBtn.url = "views/products/animals.html";
+        var processingOrdersBtn:MenuListItem = new MenuListItem();
+        processingOrdersBtn.id = "processingOrdersBtn";
+        processingOrdersBtn.label = "Processing Orders";
+        processingOrdersBtn.url = "views/products/animals.html";
+
+        return [animalsBtn,miscBtn,closedOrdersBtn,processingOrdersBtn];
+    }
 }
 }

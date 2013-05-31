@@ -1,13 +1,12 @@
-/** Compiled by the Randori compiler v0.2.4 on Sat May 25 14:59:38 CEST 2013 */
+/** Compiled by the Randori compiler v0.2.4 on Fri May 31 15:00:32 CEST 2013 */
 
 if (typeof behaviors == "undefined")
 	var behaviors = {};
 
 behaviors.MenuList = function() {
-	this._items = null;
-	this.itemClick = null;
+	this._dataProvider = null;
+	this.itemClicked = null;
 	randori.behaviors.AbstractBehavior.call(this);
-	this.itemClick = new randori.signal.SimpleSignal();
 };
 
 behaviors.MenuList.prototype.onRegister = function() {
@@ -16,24 +15,24 @@ behaviors.MenuList.prototype.onRegister = function() {
 behaviors.MenuList.prototype.onDeregister = function() {
 };
 
-behaviors.MenuList.prototype.get_items = function() {
-	return this._items;
+behaviors.MenuList.prototype.get_dataProvider = function() {
+	return this._dataProvider;
 };
 
-behaviors.MenuList.prototype.set_items = function(value) {
-	this._items = value;
+behaviors.MenuList.prototype.set_dataProvider = function(value) {
+	this._dataProvider = value;
 	this.render();
 };
 
 behaviors.MenuList.prototype.render = function() {
 	var div = jQuery("<ul><\/ul>");
-	for (var i = 0; i < this.get_items().length; i++) {
-		var menuItem = this.get_items()[i];
+	for (var i = 0; i < this.get_dataProvider().length; i++) {
+		var menuItem = this.get_dataProvider()[i];
 		var button = jQuery("<li><\/li>");
 		button.addClass("button");
 		button.html(menuItem.label);
 		button.attr("data-link", menuItem.url);
-		button.attr("data-id", "button" + i);
+		button.attr("data-id", menuItem.id);
 		button.click($createStaticDelegate(this, this.buttonClickHandler));
 		div.append(button);
 	}
@@ -43,24 +42,25 @@ behaviors.MenuList.prototype.render = function() {
 
 behaviors.MenuList.prototype.buttonClickHandler = function(event) {
 	var clickedButton = jQuery(event.currentTarget);
-	this.selectButton(clickedButton, event);
+	this.selectButton(clickedButton.attr("data-id"));
 };
 
-behaviors.MenuList.prototype.selectButton = function(clickedButton, event) {
-	if (arguments.length < 2) {
-		event = null;
-	}
+behaviors.MenuList.prototype.selectButton = function(id) {
 	var children = this.decoratedNode.children().children();
 	for (var i = 0; i < children.length; i++) {
 		var button = children.eq(i);
-		if (button.attr("data-id") == clickedButton.attr("data-id")) {
+		if (button.attr("data-id") == id) {
 			button.addClass("selected");
 		} else {
 			button.removeClass("selected");
 		}
 	}
-	if (event)
-		this.itemClick.dispatch(event);
+	for (var j = 0; j < this.get_dataProvider().length; j++) {
+		var item = this.get_dataProvider()[j];
+		if (item.id == id) {
+			this.itemClicked.dispatch(item);
+		}
+	}
 };
 
 $inherit(behaviors.MenuList, randori.behaviors.AbstractBehavior);
@@ -69,9 +69,7 @@ behaviors.MenuList.className = "behaviors.MenuList";
 
 behaviors.MenuList.getClassDependencies = function(t) {
 	var p;
-	p = [];
-	p.push('randori.signal.SimpleSignal');
-	return p;
+	return [];
 };
 
 behaviors.MenuList.injectionPoints = function(t) {
@@ -79,6 +77,7 @@ behaviors.MenuList.injectionPoints = function(t) {
 	switch (t) {
 		case 1:
 			p = randori.behaviors.AbstractBehavior.injectionPoints(t);
+			p.push({n:'itemClicked', t:'randori.signal.SimpleSignal', r:0, v:null});
 			break;
 		case 2:
 			p = randori.behaviors.AbstractBehavior.injectionPoints(t);

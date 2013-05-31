@@ -1,4 +1,4 @@
-/** Compiled by the Randori compiler v0.2.4 on Sat May 25 14:59:38 CEST 2013 */
+/** Compiled by the Randori compiler v0.2.4 on Fri May 31 15:00:32 CEST 2013 */
 
 if (typeof mediators == "undefined")
 	var mediators = {};
@@ -26,11 +26,10 @@ mediators.products.AnimalMediator.prototype.loadGrid = function(result) {
 	var col1 = {id:"name", name:"Name", field:"name", sortable:true, formatter:null};
 	var col2 = {id:"age", name:"Age", field:"age", sortable:true, formatter:null};
 	var col4 = {id:"animal", name:"Animal", field:"animal", sortable:true, formatter:null};
-	var col5 = {id:"picture", name:"Picture", field:"picture", sortable:true, formatter:null};
 	var col6 = {id:"gender", name:"Gender", field:"gender", sortable:true, formatter:null};
 	var col7 = {id:"about", name:"About", field:"about", sortable:true, formatter:null};
 	var col8 = {id:"registered", name:"Registered", field:"registered", sortable:true, formatter:null};
-	var columns = [col1, col2, col4, col5, col6, col7, col8];
+	var columns = [col1, col2, col4, col6, col7, col8];
 	var options = {};
 	options.enableCellNavigation = true;
 	options.enableColumnReorder = false;
