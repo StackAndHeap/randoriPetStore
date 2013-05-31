@@ -1,0 +1,32 @@
+/* Behaviors */
+.tabBar {
+    -randori-behavior: "behaviors.TabBar";
+}
+.viewStack {
+    -randori-behavior: "randori.behaviors.ViewStack";
+}
+.simpleList {
+    -randori-behavior: "randori.behaviors.SimpleList";
+}
+.menuList{
+    -randori-behavior: "behaviors.MenuList";
+}
+/* Mediators */
+.simpleApp {
+    -randori-context: "contexts.BoringContext";
+    -randori-mediator: "mediators.IndexMediator";
+}
+.miscView {
+    -randori-mediator: "mediators.products.MiscMediator";
+}
+.animalView {
+    -randori-mediator: "mediators.products.AnimalMediator";
+}
+.animalDetailView {
+    -randori-mediator: "mediators.products.AnimalDetailMediator";
+}
+
+/* Fragments */
+.simpleTabFragment {
+    -randori-fragment: "fragments/SimpleTabFragment.html";
+}

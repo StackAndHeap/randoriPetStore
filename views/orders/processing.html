@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+</head>
+<body class="stockView" data-tab-title="Animals">
+
+<table>
+    <thead>
+        <tr>
+            <th>ID<span id="btnSort1" class="icon icon_arrow_up right"/></th>
+            <th>SPECIE<span id="btnSort2" class="icon icon_sort right"/></th>
+            <th>NAME<span id="btnSort3" class="icon icon_sort right"/></th>
+            <th>AGE<span id="btnSort4" class="icon icon_sort right"/></th>
+            <th>GENDER<span id="btnSort5" class="icon icon_sort right"/></th>
+            <!--<th>ABOUT</th>-->
+            <th>REGISTERED<span id="btnSort6" class="icon icon_sort right"/></th>
+            <th>PICTURE</th>
+        </tr>
+    </thead>
+    <tbody  id="stocklist" class="simpleList">
+        <tr id="template">
+            <td>{id}</td>
+            <td>{animal}</td>
+            <td>{name}</td>
+            <td>{age}</td>
+            <td>{gender}</td>
+            <!--<td>{about}</td>-->
+            <td>{registered}</td>
+            <td>{picture}</td>
+        </tr>
+    </tbody>
+</table>
+</body>
+</html>

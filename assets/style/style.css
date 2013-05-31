@@ -1,0 +1,159 @@
+html {
+    max-height: 100%;
+    width: 100%;
+    height: 100%;
+    max-height: 100%;
+    overflow: hidden;
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+}
+
+body {
+    font-family: 'Open Sans', sans-serif;
+    font-size: 14px;
+    font-weight: normal;
+    line-height: 1.2em;
+    width: 100%;
+    height: 100%;
+    background-color: #F2EDE6;
+    max-height: 100%;
+    overflow: hidden;
+}
+header{
+    width: 100%;
+    height: 160px;
+    position:absolute; top:0px; left:0px; right:0px;overflow:hidden;
+}
+
+.logo{
+    display:inline-block;
+    margin: 10px;
+}
+.acountbox{
+  display:inline-block;
+  float:right;
+  margin:20px;
+}
+.acountbox p{ display:inline-block; }
+
+.menu-top ul{ margin: 10px 0 0 370px; }
+.menu-top li{
+    display:inline;
+    font-weight:800;
+    color: #615e5c;
+    font-size:14px;
+    line-height: 30px;
+    padding: 10px 10px 10px 20px;
+    background-color:#f8f3ec;
+    margin-right: 5px;
+}
+
+.menu-top  a
+{
+    font-weight:800;
+    padding-right: 10px;
+    color: #404040;
+}
+.menu-top  a:hover
+{
+    text-decoration: none;
+    color: #404040;
+}
+
+.menu-top .selected
+{
+    background-color: white;
+    color: #404040;
+    padding-bottom: 14px;
+}
+.menu-top .selected:hover
+{
+    background-color: white;
+    cursor: default;
+}
+.menu-top li:hover
+{
+    background-color: #f9f9f9;
+    text-decoration: none;
+    cursor: hand;
+}
+
+.menu-left{ position: absolute;  top: 124px;}
+.menu-left ul{ margin: 0 }
+.menu-left li{ list-style: none; line-height: 55px;width: 315px;background-color: #f9f9f9; margin-bottom: 5px;cursor: pointer; padding: 0px 15px; color: Background }
+.menu-left li:hover{ background-color: #f8f3ec }
+.menu-left .selected{ background-color:white;color: black;width: 320px;font-weight: bold}
+.menu-left .selected:hover{ background-color:white}
+.menu-left .menu-sub-title{ padding: 10px;margin: 0;font-weight: 800}
+
+.button_big{
+    margin-left:15px;
+    padding:10px 20px;
+    border-radius:5px;
+    background-color:#1E4589;
+    color:white;
+}
+.button_big:hover{
+    color:wheat;
+    text-decoration: none;
+}
+
+.content{
+  background-color:#fff;
+  padding: 20px;
+  position:absolute; top:124px; bottom:0px; left:350px; right:0px; overflow:auto;
+
+}
+
+table { border-collapse: collapse; border: 1px solid #CCB; width: 100%; }
+table td, table th { padding: 5px; border: 1px solid #E0E0E0; }
+table th { background: #E5E5E5; text-align: left; }
+table tr:hover { background-color: #EFF8FB }
+input.invalid { background: red; color: #FDFDFD; }
+
+
+.loginform{
+  margin-left:20px;
+  margin-right:20px;
+}
+
+.alert {
+  margin-bottom: 10px !important;
+  margin-top: 10px !important;
+}
+
+.close {
+    float: none;
+}
+
+.icon_sort{
+    background-position: -128px 0;
+}
+.icon_arrow_down{
+     background-position: 0 -16px;
+ }
+.icon_arrow_up{
+    background-position: -64px -16px;
+}
+
+.icon{
+    background-image: url(http://www.datatables.net/media/css/jui_themes/smoothness/images/ui-icons_888888_256x240.png);
+    display: block;
+    text-indent: -99999px;
+    overflow: hidden;
+    background-repeat: no-repeat;
+    width: 16px;
+    height: 16px;
+    cursor: pointer;
+}
+
+.right{
+    float: right;
+    text-align: right;
+}
+.inline{
+    display: inline;
+    position: absolute;
+}
+
