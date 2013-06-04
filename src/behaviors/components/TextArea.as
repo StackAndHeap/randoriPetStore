@@ -6,16 +6,15 @@ import randori.jquery.JQueryStatic;
 import randori.signal.SimpleSignal;
 import randori.webkit.page.Window;
 
-public class TextInput extends AbstractBehavior {
+public class TextArea extends AbstractBehavior {
 
     private var _value:String;
     private var _dataField:String;
     private var _label:String;
-    private var _type:String = "text";
     private var _state:String = "view";
 
     [Inject]
-public var valueCommit:SimpleSignal;
+    public var valueCommit:SimpleSignal;
     [Inject]
     public var valueChanged:SimpleSignal;
 
@@ -54,15 +53,17 @@ public var valueCommit:SimpleSignal;
         var paragraph:JQuery = JQueryStatic.J("<p></p>");
         paragraph.css3("font-weight", "bold");
         paragraph.css3("display", "inline-block");
-        paragraph.css3("vertical-align", "middle");
+        paragraph.css3("vertical-align", "top");
         paragraph.html(label + ": ");
         div.append(paragraph);
 
-        var textinput:JQuery = JQueryStatic.J("<input/>");
-        textinput.attr2("type", _type);
+        var textinput:JQuery = JQueryStatic.J("<textarea/>");
+        Window.console.log(textinput);
+        textinput.attr("cols", "70");
+        textinput.attr("rows", "5");
         textinput.css3("display", "inline-block");
         textinput.css3("margin-left", "5px");
-        textinput.val(value);
+        textinput.text(value);
         textinput.focusout1(onLostFocus);
         textinput.keyup1(keyPressedHandler);
         div.append(textinput);
@@ -144,13 +145,5 @@ public var valueCommit:SimpleSignal;
         valueChanged.dispatch();
     }
 
-    public function get type():String {
-        return _type;
-    }
-
-    public function set type(value:String):void {
-        _type = value;
-        valueChanged.dispatch();
-    }
 }
 }

@@ -4,18 +4,17 @@ import randori.jquery.Event;
 import randori.jquery.JQuery;
 import randori.jquery.JQueryStatic;
 import randori.signal.SimpleSignal;
-import randori.webkit.page.Window;
 
-public class TextInput extends AbstractBehavior {
+public class DropDown extends AbstractBehavior {
 
     private var _value:String;
     private var _dataField:String;
+    private var _dataProvider:Array;
     private var _label:String;
-    private var _type:String = "text";
     private var _state:String = "view";
 
     [Inject]
-public var valueCommit:SimpleSignal;
+    public var valueCommit:SimpleSignal;
     [Inject]
     public var valueChanged:SimpleSignal;
 
@@ -33,6 +32,7 @@ public var valueCommit:SimpleSignal;
 
     override protected function onDeregister():void {
         valueChanged.remove(render);
+
     }
 
     private function render():void {
@@ -58,28 +58,25 @@ public var valueCommit:SimpleSignal;
         paragraph.html(label + ": ");
         div.append(paragraph);
 
-        var textinput:JQuery = JQueryStatic.J("<input/>");
-        textinput.attr2("type", _type);
-        textinput.css3("display", "inline-block");
-        textinput.css3("margin-left", "5px");
-        textinput.val(value);
-        textinput.focusout1(onLostFocus);
-        textinput.keyup1(keyPressedHandler);
-        div.append(textinput);
-
-        textinput.focus();
-    }
-
-    private function keyPressedHandler(e:*):void {
-        Window.console.log(e);
-        switch (e.keyCode) {
-            case 13:
-                commit(e.currentTarget.value);
-                break;
-            case 27:
-                cancel();
-                break;
+        var dropdown:JQuery = JQueryStatic.J("<select></select>");
+        dropdown.css3("display", "inline-block");
+        dropdown.css3("margin-left", "5px");
+        for (var i:int = 0; i < dataProvider.length; i++) {
+            var item:String = dataProvider[i];
+            var option:JQuery = JQueryStatic.J("<option></option>");
+            option.html(item);
+            if(item == value) {
+                option.attr2("selected", "selected");
+            } else {
+                option.removeAttr("selected");
+            }
+            dropdown.append(option);
         }
+        dropdown.focusout1(onLostFocus);
+        dropdown.change(onLostFocus);
+        div.append(dropdown);
+        
+        dropdown.focus();
     }
 
     private function onLostFocus(e:*):void {
@@ -93,10 +90,6 @@ public var valueCommit:SimpleSignal;
         valueCommit.dispatch(_value, _dataField);
     }
 
-    private function cancel():void {
-        state = "view";
-    }
-
     private function renderViewState(node:JQuery):void {
         var paragraph:JQuery = JQueryStatic.J("<p></p>");
         paragraph.click(gotoEditState);
@@ -107,6 +100,7 @@ public var valueCommit:SimpleSignal;
     private function gotoEditState(e:Event):void {
         state = "edit";
     }
+
 
     public function get value():String {
         return _value;
@@ -144,12 +138,12 @@ public var valueCommit:SimpleSignal;
         valueChanged.dispatch();
     }
 
-    public function get type():String {
-        return _type;
+    public function get dataProvider():Array {
+        return _dataProvider;
     }
 
-    public function set type(value:String):void {
-        _type = value;
+    public function set dataProvider(value:Array):void {
+        _dataProvider = value;
         valueChanged.dispatch();
     }
 }
