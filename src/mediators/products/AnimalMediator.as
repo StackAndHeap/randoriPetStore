@@ -7,19 +7,27 @@ import models.Animal;
 
 import randori.behaviors.AbstractMediator;
 import randori.jquery.JQuery;
+import randori.webkit.html.HTMLInputElement;
 
 import services.MockAnimalService;
 
 public class AnimalMediator extends AbstractMediator {
 
     [View] public var gridContainer:JQuery;
+    [View] public var filter:JQuery;
     [Inject] public var animalService:MockAnimalService;
     [Inject] public var appBus:AppEventBus;
 
     private var grid:Grid;
 
     override protected function onRegister():void {
+        filter.keyup1( filterData );
         animalService.getAll().then( handleResult );
+    }
+
+    private function filterData(event:randori.jquery.Event):void{
+        var input:HTMLInputElement = event.target as HTMLInputElement;
+        animalService.get( input.value ).then( handleResult );
     }
 
     private function handleResult( result:Array ):void {
