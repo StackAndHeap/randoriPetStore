@@ -13,11 +13,14 @@
 }
 /* Mediators */
 .simpleApp {
-    -randori-context: "contexts.BoringContext";
+    -randori-context: "context.BoringContext";
     -randori-mediator: "mediators.IndexMediator";
 }
 .loginFragment{
     -randori-mediator: "mediators.LoginMediator";
+}
+.contentFragment{
+    -randori-mediator: "mediators.ContentMediator";
 }
 .miscView {
     -randori-mediator: "mediators.products.MiscMediator";

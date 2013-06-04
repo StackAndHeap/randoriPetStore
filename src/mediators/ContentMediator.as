@@ -61,7 +61,7 @@ public class ContentMediator extends AbstractMediator {
 
         switch (item.type) {
             case "animal":
-                var loadAnimal:Promise = loadView("views/products/animals-detail.html");
+                var loadAnimal:Promise = loadView("views/content/products/animals-detail.html");
                 loadAnimal.then(viewAddedHandler);
                 break;
             case "misc":
@@ -85,6 +85,7 @@ public class ContentMediator extends AbstractMediator {
     }
 
     private function menuClickHandler( item:MenuListItem ):void {
+
         tabBar.deselectAll();
         urlRouter.replaceRoute(0,item.route);
         var promise:Promise = loadView( item.url );
@@ -92,6 +93,7 @@ public class ContentMediator extends AbstractMediator {
     }
 
     private function loadView(url:String):Promise {
+
         var promise:Promise;
 
         if(myViewStack.hasView(url) == true) {
@@ -99,6 +101,7 @@ public class ContentMediator extends AbstractMediator {
             promise = new Promise();
             promise.resolve(true);
         } else {
+            Window.console.log(myViewStack,url);
             promise = myViewStack.pushView(url);
             promise.then(function():void {
                 myViewStack.selectView(url);
@@ -110,6 +113,7 @@ public class ContentMediator extends AbstractMediator {
 
     public function viewAddedHandler ( mediator:* ) :void
     {
+        Window.console.log("view added");
         switch(selectedTabBarItem.type) {
             case "animal":
                 (mediator as AnimalDetailMediator).setData(selectedTabBarItem);
@@ -132,23 +136,23 @@ public class ContentMediator extends AbstractMediator {
         var animalsBtn:MenuListItem = new MenuListItem();
         animalsBtn.id = "animalsBtn";
         animalsBtn.label = "Animals";
-        animalsBtn.url = "views/products/animals.html";
+        animalsBtn.url = "views/content/products/animals.html";
         animalsBtn.route = "animals";
         var miscBtn:MenuListItem = new MenuListItem();
         miscBtn.id = "miscBtn";
         miscBtn.label = "Misc";
-        miscBtn.url = "views/products/misc.html";
+        miscBtn.url = "views/content/products/misc.html";
         miscBtn.route = "misc"
         var closedOrdersBtn:MenuListItem = new MenuListItem();
         closedOrdersBtn.id = "closedOrdersBtn";
         closedOrdersBtn.label = "Closed Orders";
-        closedOrdersBtn.url = "views/products/animals.html";
+        closedOrdersBtn.url = "views/content/products/animals.html";
         closedOrdersBtn.route = "closedOrders";
         var processingOrdersBtn:MenuListItem = new MenuListItem();
         processingOrdersBtn.id = "processingOrdersBtn";
         processingOrdersBtn.label = "Processing Orders";
         processingOrdersBtn.route = "processingOrders";
-        processingOrdersBtn.url = "views/products/animals.html";
+        processingOrdersBtn.url = "views/content/products/animals.html";
 
         return [animalsBtn,miscBtn,closedOrdersBtn,processingOrdersBtn];
     }
