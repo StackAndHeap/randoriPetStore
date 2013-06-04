@@ -35,3 +35,7 @@
 .contentFragment {
     -randori-fragment: "fragments/ContentFragment.html";
 }
+
+.textInput {
+    -randori-behavior: "behaviors.components.TextInput";
+}

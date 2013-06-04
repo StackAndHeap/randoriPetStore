@@ -1,13 +1,12 @@
 package mediators.products {
+import behaviors.components.TextInput;
 import behaviors.tabbar.TabBarItem;
 
 import models.Animal;
 
 import randori.behaviors.AbstractMediator;
 import randori.jquery.JQuery;
-import randori.jquery.JQueryStatic;
 import randori.template.TemplateBuilder;
-import randori.webkit.page.Window;
 
 import services.MockAnimalService;
 
@@ -17,6 +16,8 @@ public class AnimalDetailMediator extends AbstractMediator {
     [Inject] public var templateBuilder:TemplateBuilder;
     [View(required = "false")] public var template:JQuery;
 
+    [View] public var nameTxt:TextInput;
+
     [Inject] public var animalService:MockAnimalService;
 
     private var _data:Animal;
@@ -24,34 +25,24 @@ public class AnimalDetailMediator extends AbstractMediator {
     public function AnimalDetailMediator():void{}
 
     public function render():void{
-        var row:JQuery;
-        var div:JQuery = JQueryStatic.J("<div></div>");
-        row = templateBuilder.renderTemplateClone(_data).children();
-        row.addClass("randoriListItem");
-        div.append(row);
-
-        decoratedNode.empty();
-        decoratedNode.append(div.children());
-    }
-
-
-    override protected function onPreRegister():void {
-        super.onPreRegister();
-        templateBuilder.captureAndEmptyTemplateContents(decoratedNode);
+        nameTxt.value = _data.name;
+        nameTxt.dataField = "name";
     }
 
     override protected function onRegister():void {
-
+        nameTxt.valueCommit.add(saveValue);
     }
 
     override protected function onDeregister():void {
+        nameTxt.valueCommit.remove(saveValue);
+    }
 
+    private function saveValue(value:String, dataField:String):void {
+        animalService.save(_data.id, value, dataField);
     }
 
     public function setData(value:TabBarItem):void {
-        Window.console.log("setData");
         animalService.getById(value.id).then(dataReceivedHandler);
-        render();
     }
 
     private function dataReceivedHandler(data:Animal):void {

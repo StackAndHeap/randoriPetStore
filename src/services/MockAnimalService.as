@@ -92,5 +92,14 @@ public class MockAnimalService {
 
         return returnVal;
     }
+
+    public function save(id:int, value:String, dataField:String):void {
+        for(var i:int=0;i<_data.length;i++) {
+            var animal:Animal = _data[i] as Animal;
+            if(animal.id == id) {
+                animal[dataField] = value;
+            }
+        }
+    }
 }
 }
