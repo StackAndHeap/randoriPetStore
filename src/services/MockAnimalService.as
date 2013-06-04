@@ -8,6 +8,7 @@ import services.json.parsers.AnimalParser;
 public class MockAnimalService {
     private var source:String = "assets/data/animals50.json";
     private var _data:Array;
+    private var _filter:String;
 
     [Inject] public var jsonService:JsonService;
 
@@ -20,7 +21,7 @@ public class MockAnimalService {
         return promise;
     }
 
-    private function handleResult(data:Array):void {
+    private function handleResult( data:Array ):void {
         _data = data;
     }
 
@@ -37,6 +38,12 @@ public class MockAnimalService {
             promise = loadJSON();
         }
         return promise;
+    }
+
+    private function filterFunction( element:Object, index:int, array:Array):Boolean{
+        var returnVal:Boolean;
+        returnVal= element["name"].indexOf( _filter ) > 0 ? true :  false;
+        return returnVal;
     }
 }
 }

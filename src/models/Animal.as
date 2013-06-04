@@ -38,6 +38,7 @@ public class Animal {
     public var about:String;
     public var registered:String;
 
+
     public function Animal() {
     }
 }

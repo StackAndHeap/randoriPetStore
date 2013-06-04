@@ -20,6 +20,7 @@ public class AnimalMediator extends AbstractMediator {
 
     override protected function onRegister():void {
         animalService.getAll().then( handleResult );
+//        animalService.get("er").then( handleResult );
     }
 
     private function handleResult( result:Array ):void {
