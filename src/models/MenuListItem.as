@@ -6,6 +6,7 @@ public class MenuListItem {
     public var id:String;
     public var label:String;
     public var url:String;
+    public var route:String;
 
 }
 }

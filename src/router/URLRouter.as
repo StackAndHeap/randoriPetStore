@@ -11,17 +11,17 @@ public class URLRouter {
     private function parseUrl():void {
         var currentHashes:Array = Window.location.hash.split("/");
 
-        for(var i:uint = 0; i<currentHashes.length; i++) {
+        for (var i:uint = 0; i < currentHashes.length; i++) {
             var hash:String = currentHashes[i];
-            if(hash != "") {
-                hash = hash.replace("#","");
+            if (hash != "") {
+                hash = hash.replace("#", "");
                 route.push(hash);
             }
         }
     }
 
     private function renderHash():void {
-        Window.location.hash = "#"+ route.join("/");
+        Window.location.hash = "#" + route.join("/");
     }
 
     public function addRoute(newRoute:String):void {
@@ -32,7 +32,11 @@ public class URLRouter {
     public function replaceRoute(id:int, newRoute:String):void {
         route[id] = newRoute;
         renderHash();
+    }
 
-}
+    public function removeRoute():void {
+        route = [];
+        renderHash();
+    }
 }
 }

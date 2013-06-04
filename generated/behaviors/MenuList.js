@@ -1,4 +1,4 @@
-/** Compiled by the Randori compiler v0.2.4 on Tue Jun 04 10:49:48 CEST 2013 */
+/** Compiled by the Randori compiler v0.2.4 on Tue Jun 04 11:14:01 CEST 2013 */
 
 if (typeof behaviors == "undefined")
 	var behaviors = {};
@@ -43,6 +43,15 @@ behaviors.MenuList.prototype.render = function() {
 behaviors.MenuList.prototype.buttonClickHandler = function(event) {
 	var clickedButton = jQuery(event.currentTarget);
 	this.selectButton(clickedButton.attr("data-id"));
+};
+
+behaviors.MenuList.prototype.deselectAll = function() {
+	console.log("deselectAll");
+	var children = this.decoratedNode.children().children();
+	for (var i = 0; i < children.length; i++) {
+		var button = children.eq(i);
+		button.removeClass("selected");
+	}
 };
 
 behaviors.MenuList.prototype.selectButton = function(id) {
