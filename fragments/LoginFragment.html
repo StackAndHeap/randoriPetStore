@@ -1,0 +1,55 @@
+<div class="front-card">
+    <div class="front-welcome">
+        <div class="front-welcome-text">
+            <h1>Welkom bij Petshop Pro.</h1>
+            <p>descr.</p>
+        </div>
+
+    </div>
+
+    <div class="front-signin well">
+        <form action="#" class="signin" method="get">
+            <div class="placeholding-input username">
+                <label for="signin-email" class="placeholder">Gebruikersnaam</label>
+                <input type="text" id="signin-email" class="text-input email-input" name="session[username_or_email]" title="Gebruikersnaam of e-mailadres" autocomplete="on" tabindex="1">
+            </div>
+
+            <div class="placeholding-input">
+                <label for="signin-user-password" class="placeholder">Volledige naam</label>
+                <input type="password" id="signin-user-password" class="text-input" autocomplete="off" name="session[password]" maxlength="20">
+            </div>
+
+            <div class="remember-forgot">
+                <label class="remember">
+                    <input type="checkbox" value="1" name="remember_me" tabindex="3" checked="checked">
+                    <span>Ingelogd blijven</span>
+                </label>
+                <span class="separator">·</span>
+                <a class="forgot" href="/account/resend_password">Wachtwoord vergeten?</a>
+            </div>
+
+            <button type="submit" id="button_login" class="btn signup-btn">Login</button>
+        </form>
+    </div>
+
+    <div class="front-signup well">
+        <h2><strong>Nieuw ?</strong> Registreer nu</h2>
+
+        <form action="" class="signup" method="post">
+            <div class="placeholding-input">
+                <label for="signup-user-name" class="placeholder">Volledige naam</label>
+                <input type="text" id="signup-user-name" class="text-input" autocomplete="off" name="user[name]" maxlength="20">
+            </div>
+            <div class="placeholding-input">
+                <label for="signup-user-email" class="placeholder">E-mailadres</label>
+                <input type="text" id="signup-user-email" class="text-input email-input" autocomplete="off" name="user[email]">
+            </div>
+            <div class="placeholding-input">
+                <label for="signup-user-password" class="placeholder">Wachtwoord</label>
+                <input type="password" id="signup-user-password" class="text-input" name="user[user_password]">
+            </div>
+            <button type="submit" class="btn signup-btn">Registreren</button>
+        </form>
+    </div>
+
+</div>

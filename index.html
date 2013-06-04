@@ -11,6 +11,7 @@
     <script type="text/javascript" src="http://code.jquery.com/jquery-1.10.0.min.js"></script>
     <script type="text/javascript" src="generated/lib/randori-guice-framework.js"></script>
     <script type="text/javascript" src="generated/lib/randori-framework.js"></script>
+    <script type="text/javascript" src="./jsLibs/bootstrap/bootstrap.js"></script>
 
     <script type="text/javascript" src="jsLibs/SlickGrid/lib/jquery.event.drag-2.2.js"></script>
     <script type="text/javascript" src="jsLibs/SlickGrid/slick.core.js"></script>
@@ -18,7 +19,6 @@
     <script type="text/javascript" src="jsLibs/SlickGrid/plugins/slick.rowselectionmodel.js"></script>
 
     <link rel="stylesheet/randori" href="assets/behaviors.css" type="text/css"/>
-
 
     <script type="text/javascript">
         //Start the randori framework
@@ -29,44 +29,17 @@
     </script>
 </head>
 <body class="simpleApp">
-    <header>
-        <div class="logo">
-            <img src="assets/images/dog_cat.png"/>
-        </div>
+    <!--<header>-->
+        <!--<div class="logo">-->
+            <!--<img src="assets/images/dog_cat.png"/>-->
+        <!--</div>-->
 
-        <div class="acountbox">
-            <p> Logged in as: <a href="#account">Pieter</a></p>
-            <a class="button_big" href="#logout">Log Out</a>
-        </div>
+        <!--<div class="acountbox">-->
+            <!--<p> Logged in as: <a href="#account">Pieter</a></p>-->
+            <!--<a class="button_big" href="#logout">Log Out</a>-->
+        <!--</div>-->
+    <!--</header>-->
 
-        <!-- TabBar -->
-        <div class="menu-top">
-            <ul class="tabBar" id="tabBar"></ul>
-        </div>
-
-    </header>
-
-    <section class="menu-left">
-        <div id="menuLeft" class="menuList"></div>
-        <!--<p class="menu-sub-title">Products</p>-->
-        <!--<ul>-->
-            <!--<li data-link="views/products/animals.html" data-attribute="animals" class="button selected" id="btnProducts">Animals</li>-->
-            <!--<li data-link="views/products/misc.html" data-attribute="misc" class="button" id="btnThings">Misc</li>-->
-        <!--</ul>-->
-        <!--<p class="menu-sub-title">Orders</p>-->
-        <!--<ul>-->
-            <!--<li data-link="views/orders/open.html" class="button" id="btnOpen">Open</li>-->
-            <!--<li data-link="views/orders/processing.html" class="button" id="btnProcessing">Processing</li>-->
-            <!--<li data-link="views/orders/closed.html" class="button" id="btnClosed">Closed</li>-->
-        <!--</ul>-->
-    </section>
-
-    <section class="content">
-
-        <!--<input id="popView" value="Pop View" type="button"/>-->
-
-        <div id="myViewStack" class="viewStack" style="position:relative"/>
-    </section>
-
+    <div id="mainViewStack" class="viewStack" style="position:relative"/>
 </body>
 </html>

@@ -20,23 +20,15 @@ body {
     max-height: 100%;
     overflow: hidden;
 }
-header{
-    width: 100%;
-    height: 160px;
-    position:absolute; top:0px; left:0px; right:0px;overflow:hidden;
-}
 
-.logo{
-    display:inline-block;
-    margin: 10px;
-}
-.acountbox{
-  display:inline-block;
-  float:right;
-  margin:20px;
-}
+/*  HEADER  */
+header{ width: 100%; height: 160px; position:absolute; top:0px; left:0px; right:0px;overflow:hidden; }
+.logo{ display:inline-block; margin: 10px; }
+.acountbox{ display:inline-block; float:right; margin:20px; }
 .acountbox p{ display:inline-block; }
 
+/*  TABBAR  */
+.menu-top{ position: absolute;top: 113px; }
 .menu-top ul{ margin: 10px 0 0 370px; }
 .menu-top li{
     display:inline;
@@ -48,7 +40,6 @@ header{
     background-color:#f8f3ec;
     margin-right: 5px;
 }
-
 .menu-top  a
 {
     cursor: pointer;
@@ -62,7 +53,6 @@ header{
     text-decoration: none;
     color: #404040;
 }
-
 .menu-top .selected
 {
     background-color: white;
@@ -81,6 +71,7 @@ header{
     cursor: hand;
 }
 
+/*  MAIN MENU  */
 .menu-left{ position: absolute;  top: 160px;}
 .menu-left ul{ margin: 0 }
 .menu-left li{ list-style: none; line-height: 55px;width: 315px;background-color: #f9f9f9; margin-bottom: 5px;cursor: pointer; padding: 0px 15px; color: Background }
@@ -88,7 +79,6 @@ header{
 .menu-left .selected{ background-color:white;color: black;width: 320px;font-weight: bold}
 .menu-left .selected:hover{ background-color:white}
 .menu-left .menu-sub-title{ padding: 10px;margin: 0;font-weight: 800}
-
 .button_big{
     margin-left:15px;
     padding:10px 20px;
@@ -100,13 +90,13 @@ header{
     color:wheat;
     text-decoration: none;
 }
-
 .content{
   background-color:#fff;
   padding: 20px;
   position:absolute; top:160px; bottom:0px; left:350px; right:0px; overflow:auto;
 
 }
+
 
 table { border-collapse: collapse; border: 1px solid #CCB; width: 100%; }
 table td, table th { padding: 5px; border: 1px solid #E0E0E0; }
@@ -158,4 +148,61 @@ input.invalid { background: red; color: #FDFDFD; }
     display: inline;
     position: absolute;
 }
+
+/* LOGIN PAGE */
+.front-card{
+    position: relative;
+    top: 140px;
+    /*padding: 40px;*/
+    width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+}
+.front-welcome{
+    height: 400px;
+    width: 350px;
+    position: absolute;
+    top: 0;
+    left: 0px;
+}
+.front-signin{
+    height: 105px;
+    width: 350px;
+    position: absolute;
+    top: 0;
+    left: 400px;
+
+}
+.front-signup{
+    height: 185px;
+    width: 350px;
+    position: absolute;
+    top: 147px;
+    left: 400px;
+}
+
+.placeholder{display: inline-block; width: 125px;
+}
+
+.front-signup h2, .front-signin h2 {
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 20px;
+    color: #777;
+    text-shadow: 0 1px 0 rgba(255,255,255,.6);
+}
+.front-signin .remember, .front-signin .forgot, .front-signin .separator {
+    font-size: 11px;
+    line-height: 13px;
+    color: #999;
+    text-shadow: 0 1px 0 rgba(255,255,255,.6);
+    display: inline-block;
+}
+.front-signin .remember span{ margin-left: 5px; padding-top: 13px; }
+.remember-forgot{  margin-top: 10px; }
+.front-signin .remember input[type="checkbox"]{  margin-top: 0; }
+.loginFragment form{ margin: 0; }
+.loginFragment .btn {  position: absolute;  right: 20px; bottom: 12px; width: 100px }
+.loginFragment input {  border-radius: 3px !important; }
+
 
