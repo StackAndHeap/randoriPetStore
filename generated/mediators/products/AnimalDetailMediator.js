@@ -1,4 +1,4 @@
-/** Compiled by the Randori compiler v0.2.4 on Tue Jun 04 15:22:37 CEST 2013 */
+/** Compiled by the Randori compiler v0.2.4 on Tue Jun 04 16:25:46 CEST 2013 */
 
 if (typeof mediators == "undefined")
 	var mediators = {};
@@ -9,6 +9,7 @@ mediators.products.AnimalDetailMediator = function() {
 this.aboutTxt = null;
 this.ageTxt = null;
 this.animalTxt = null;
+this.appBus = null;
 this.animalService = null;
 this.nameTxt = null;
 this.genderDropDown = null;
@@ -51,6 +52,10 @@ mediators.products.AnimalDetailMediator.prototype.onDeregister = function() {
 
 mediators.products.AnimalDetailMediator.prototype.saveValue = function(value, dataField) {
 	this.animalService.save(this._data.id, value, dataField);
+	this._data[dataField] = value;
+	if (dataField == "name") {
+		this.appBus.nameChanged.dispatch(this._data, "animal");
+	}
 };
 
 mediators.products.AnimalDetailMediator.prototype.setData = function(value) {
@@ -77,6 +82,7 @@ mediators.products.AnimalDetailMediator.injectionPoints = function(t) {
 		case 1:
 			p = randori.behaviors.AbstractMediator.injectionPoints(t);
 			p.push({n:'animalService', t:'services.MockAnimalService', r:0, v:null});
+			p.push({n:'appBus', t:'eventBus.AppEventBus', r:0, v:null});
 			break;
 		case 2:
 			p = randori.behaviors.AbstractMediator.injectionPoints(t);

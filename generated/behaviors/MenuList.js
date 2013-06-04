@@ -1,4 +1,4 @@
-/** Compiled by the Randori compiler v0.2.4 on Tue Jun 04 15:15:19 CEST 2013 */
+/** Compiled by the Randori compiler v0.2.4 on Tue Jun 04 16:25:46 CEST 2013 */
 
 if (typeof behaviors == "undefined")
 	var behaviors = {};
@@ -46,7 +46,6 @@ behaviors.MenuList.prototype.buttonClickHandler = function(event) {
 };
 
 behaviors.MenuList.prototype.deselectAll = function() {
-	console.log("deselectAll");
 	var children = this.decoratedNode.children().children();
 	for (var i = 0; i < children.length; i++) {
 		var button = children.eq(i);

@@ -3,7 +3,6 @@ import models.Animal;
 
 import randori.async.Promise;
 import randori.timer.Timer;
-import randori.webkit.page.Window;
 
 import services.json.JsonService;
 import services.json.parsers.AnimalParser;
@@ -45,7 +44,6 @@ public class MockAnimalService {
     }
 
     public function getById(id:int):Promise {
-        Window.console.log("getById");
         var promise:Promise = new Promise();
 
         var selectedItem:Animal;

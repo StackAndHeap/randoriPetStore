@@ -1,4 +1,6 @@
 package behaviors.tabbar {
+import eventBus.AppEventBus;
+
 import randori.behaviors.AbstractBehavior;
 import randori.jquery.Event;
 import randori.jquery.JQuery;
@@ -13,14 +15,28 @@ public class TabBar extends AbstractBehavior {
     public var dataProviderChanged:SimpleSignal;
     [Inject]
     public var itemClicked:SimpleSignal;
+    [Inject]
+    public var appBus:AppEventBus;
 
     override protected function onRegister():void {
         dataProvider = [];
         dataProviderChanged.add(render);
+        appBus.nameChanged.add(renameTab);
     }
 
     override protected function onDeregister():void {
         dataProviderChanged.remove(render);
+        appBus.nameChanged.remove(renameTab);
+    }
+
+    private function renameTab(data:Object, type:String):void {
+        for (var i:int = 0; i<dataProvider.length;i++) {
+            var item:TabBarItem = dataProvider[i];
+            if(item.id == data.id && item.type == type) {
+                item.label = data.name;
+            }
+        }
+        dataProviderChanged.dispatch();
     }
 
     public function addTab(item:TabBarItem):void {

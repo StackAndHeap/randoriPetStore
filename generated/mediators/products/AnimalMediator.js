@@ -1,4 +1,4 @@
-/** Compiled by the Randori compiler v0.2.4 on Tue Jun 04 15:15:19 CEST 2013 */
+/** Compiled by the Randori compiler v0.2.4 on Tue Jun 04 16:25:46 CEST 2013 */
 
 if (typeof mediators == "undefined")
 	var mediators = {};
@@ -68,7 +68,7 @@ mediators.products.AnimalMediator.prototype.rowChangedHandler = function(e, args
 mediators.products.AnimalMediator.prototype.cellDblClickHandler = function(e, args) {
 	var selectedRow = args.row;
 	var selectedData = args.grid.getData()[selectedRow];
-	this.appBus.rowDoubleClicked.dispatch(selectedData);
+	this.appBus.rowDoubleClicked.dispatch(selectedData, "animal");
 };
 
 mediators.products.AnimalMediator.prototype.onDeregister = function() {

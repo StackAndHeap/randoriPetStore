@@ -6,7 +6,6 @@ import randori.jquery.Event;
 import randori.jquery.JQuery;
 import randori.jquery.JQueryStatic;
 import randori.signal.SimpleSignal;
-import randori.webkit.page.Window;
 
 public class MenuList extends AbstractBehavior {
 
@@ -59,7 +58,6 @@ public class MenuList extends AbstractBehavior {
     }
 
     public function deselectAll():void {
-        Window.console.log("deselectAll");
         var children:JQuery = decoratedNode.children().children();
         for (var i:uint = 0; i < children.length; i++) {
             var button:JQuery = children.eq(i);

@@ -1,4 +1,6 @@
 package services {
+import models.Misc;
+
 import randori.async.Promise;
 import randori.timer.Timer;
 
@@ -60,6 +62,38 @@ public class MockMiscService {
         if(!returnVal) returnVal= element["animal"].toLowerCase().indexOf( _filter.toLowerCase() ) >= 0 ? true :  false;
 
         return returnVal;
+    }
+
+    public function save(id:int, value:String, dataField:String):void {
+        for(var i:int=0;i<_data.length;i++) {
+            var misc:Misc = _data[i] as Misc;
+            if(misc.id == id) {
+                misc[dataField] = value;
+            }
+        }
+    }
+
+    public function getById(id:int):Promise {
+        var promise:Promise = new Promise();
+
+        var selectedItem:Misc;
+
+        for (var i:int = 0; i < _data.length; i++) {
+            var item:Misc = _data[i];
+            if (item.id == id) {
+                selectedItem = item;
+            }
+        }
+
+        var timer:Timer = new Timer(20, 1);
+
+        timer.timerTick.add(function ():void {
+            promise.resolve(selectedItem);
+        });
+
+        timer.start();
+
+        return promise;
     }
 }
 }

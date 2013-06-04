@@ -6,6 +6,7 @@ import behaviors.tabbar.TabBarItem;
 import eventBus.AppEventBus;
 
 import mediators.products.AnimalDetailMediator;
+import mediators.products.MiscDetailMediator;
 
 import models.*;
 
@@ -40,11 +41,11 @@ public class ContentMediator extends AbstractMediator {
         selectDefaultView();
     }
 
-    private function itemDoubleClickedHandler(data:Animal):void {
+    private function itemDoubleClickedHandler(data:Object, type:String):void {
         var tabItem:TabBarItem = new TabBarItem();
         tabItem.id = data.id;
         tabItem.label = data.name;
-        tabItem.type = "animal";
+        tabItem.type = type;
         tabBar.addTab(tabItem);
     }
 
@@ -59,14 +60,18 @@ public class ContentMediator extends AbstractMediator {
             allTabsRemovedHandler();
         }
 
+        var promise:Promise;
+
         switch (item.type) {
             case "animal":
-                var loadAnimal:Promise = loadView("views/content/products/animals-detail.html");
-                loadAnimal.then(viewAddedHandler);
+                promise = loadView("views/content/products/animals-detail.html");
                 break;
             case "misc":
+                promise = loadView("views/content/products/misc-detail.html");
                 break;
         }
+
+        promise.then(viewAddedHandler);
     }
 
     private function selectDefaultView():void {
@@ -101,7 +106,6 @@ public class ContentMediator extends AbstractMediator {
             promise = new Promise();
             promise.resolve(true);
         } else {
-            Window.console.log(myViewStack,url);
             promise = myViewStack.pushView(url);
             promise.then(function():void {
                 myViewStack.selectView(url);
@@ -113,10 +117,15 @@ public class ContentMediator extends AbstractMediator {
 
     public function viewAddedHandler ( mediator:* ) :void
     {
-        Window.console.log("view added");
+        if(!selectedTabBarItem) {
+            return
+        }
         switch(selectedTabBarItem.type) {
             case "animal":
                 (mediator as AnimalDetailMediator).setData(selectedTabBarItem);
+                break;
+            case "misc":
+                (mediator as MiscDetailMediator).setData(selectedTabBarItem);
                 break;
         }
     }
@@ -128,7 +137,6 @@ public class ContentMediator extends AbstractMediator {
     }
 
     private function allTabsRemovedHandler():void{
-        Window.console.log("allTabsRemovedHandler");
         selectDefaultView();
     }
 

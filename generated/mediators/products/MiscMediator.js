@@ -1,4 +1,4 @@
-/** Compiled by the Randori compiler v0.2.4 on Tue Jun 04 15:15:19 CEST 2013 */
+/** Compiled by the Randori compiler v0.2.4 on Tue Jun 04 16:25:46 CEST 2013 */
 
 if (typeof mediators == "undefined")
 	var mediators = {};
@@ -38,6 +38,13 @@ mediators.products.MiscMediator.prototype.loadGrid = function(result) {
 	options.enableCellNavigation = true;
 	options.enableColumnReorder = false;
 	this.grid = new Slick.Grid(this.gridContainer, result, columns, options);
+	this.grid.onDblClick.subscribe($createStaticDelegate(this, this.cellDblClickHandler));
+};
+
+mediators.products.MiscMediator.prototype.cellDblClickHandler = function(e, args) {
+	var selectedRow = args.row;
+	var selectedData = args.grid.getData()[selectedRow];
+	this.appBus.rowDoubleClicked.dispatch(selectedData, "misc");
 };
 
 mediators.products.MiscMediator.prototype.handleResult = function(result) {

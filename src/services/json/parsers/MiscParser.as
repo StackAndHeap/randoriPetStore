@@ -12,7 +12,8 @@ public class MiscParser {
 
         for ( var i:int=0; i<json.length; i++ ) {
             var misc:Misc = json[ i ];
-            misc.picture =  "<img src='" + json[ i ][ "picture" ] + "'/>";
+            misc.picture =  json[ i ][ "picture" ];
+            misc.picture_large = json[ i ][ "picture_large" ];
 
         }
 
