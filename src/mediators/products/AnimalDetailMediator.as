@@ -1,22 +1,32 @@
 package mediators.products {
+import behaviors.tabbar.TabBarItem;
+
+import models.Animal;
+
 import randori.behaviors.AbstractMediator;
 import randori.jquery.JQuery;
 import randori.jquery.JQueryStatic;
 import randori.template.TemplateBuilder;
+import randori.webkit.page.Window;
 
+import services.MockAnimalService;
+
+[JavaScript(export="true", name="AnimalDetailMediator")]
 public class AnimalDetailMediator extends AbstractMediator {
 
     [Inject] public var templateBuilder:TemplateBuilder;
     [View(required = "false")] public var template:JQuery;
 
-    private var _data:Object;
+    [Inject] public var animalService:MockAnimalService;
 
-    public function AnimalDetailMediator(data:Object):void{}
+    private var _data:Animal;
+
+    public function AnimalDetailMediator():void{}
 
     public function render():void{
         var row:JQuery;
         var div:JQuery = JQueryStatic.J("<div></div>");
-        row = templateBuilder.renderTemplateClone(data).children();
+        row = templateBuilder.renderTemplateClone(_data).children();
         row.addClass("randoriListItem");
         div.append(row);
 
@@ -38,12 +48,14 @@ public class AnimalDetailMediator extends AbstractMediator {
 
     }
 
-    public function get data():Object {
-        return _data;
+    public function setData(value:TabBarItem):void {
+        Window.console.log("setData");
+        animalService.getById(value.id).then(dataReceivedHandler);
+        render();
     }
 
-    public function set data(value:Object):void {
-        _data = value;
+    private function dataReceivedHandler(data:Animal):void {
+        _data = data;
         render();
     }
 }

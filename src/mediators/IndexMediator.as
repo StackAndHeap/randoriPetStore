@@ -13,8 +13,6 @@ import models.MenuListItem;
 import randori.async.Promise;
 import randori.behaviors.AbstractMediator;
 import randori.behaviors.ViewStack;
-import randori.jquery.Event;
-import randori.jquery.JQuery;
 import randori.webkit.page.Window;
 
 import router.URLRouter;
@@ -28,7 +26,7 @@ public class IndexMediator extends AbstractMediator {
     [Inject] public var appBus:AppEventBus;
     [Inject] public var urlRouter:URLRouter;
 
-    private var clickedAnimal:Animal;
+    private var selectedTabBarItem:TabBarItem;
     private var views:Array;
 
     public function IndexMediator( ) {
@@ -39,9 +37,10 @@ public class IndexMediator extends AbstractMediator {
         menuLeft.dataProvider = getDefaultMenuItems();
 
         menuLeft.itemClicked.add(menuClickHandler);
+
         appBus.rowDoubleClicked.add(itemDoubleClickedHandler);
-        appBus.tabClicked.add( handleTabClicked );
-        appBus.allTabsRemoved.add( allTabsRemovedHandler );
+
+        tabBar.itemClicked.add(onItemSelected);
 
         selectDefaultView();
     }
@@ -52,7 +51,27 @@ public class IndexMediator extends AbstractMediator {
         tabItem.label = data.name;
         tabItem.type = "animal";
         tabBar.addTab(tabItem);
+    }
 
+    private function onItemSelected(item:TabBarItem):void {
+        Window.console.log("onItemSelected");
+        selectedTabBarItem = item;
+
+        menuLeft.deselectAll();
+
+        if(item == null) {
+            allTabsRemovedHandler();
+        }
+
+        switch (item.type) {
+            case "animal":
+                    var loadAnimal:Promise = loadView("views/products/animals-detail.html");
+                    loadAnimal.then(viewAddedHandler);
+                break;
+            case "misc":
+
+                break;
+        }
     }
 
     private function selectDefaultView():void {
@@ -64,6 +83,7 @@ public class IndexMediator extends AbstractMediator {
     }
 
     private function menuClickHandler( item:MenuListItem ):void {
+        tabBar.deselectAll();
         urlRouter.replaceRoute(0,item.id);
         var promise:Promise = loadView( item.url );
         promise.then( viewAddedHandler );
@@ -88,28 +108,22 @@ public class IndexMediator extends AbstractMediator {
 
     public function viewAddedHandler ( mediator:* ) :void
     {
-        try{
-            var animalDetailMediator:AnimalDetailMediator = mediator as AnimalDetailMediator;
-            animalDetailMediator.data = clickedAnimal;
-        }catch(e:Error){
+        switch(selectedTabBarItem.type) {
+            case "animal":
+                (mediator as AnimalDetailMediator).setData(selectedTabBarItem);
+                break;
         }
     }
 
     override protected function onDeregister():void {
         menuLeft.itemClicked.remove(menuClickHandler);
-        appBus.tabClicked.remove( handleTabClicked );
-        appBus.allTabsRemoved.remove( allTabsRemovedHandler );
+        tabBar.itemClicked.remove( onItemSelected );
 
     }
-    private function handleTabClicked ( tab:JQuery, data:* ) :void{
-        this.clickedAnimal = data;
-        Window.console.log(data);
-        var promise:Promise = loadView("views/products/animals-detail.html");
-        promise.then( viewAddedHandler );
-    }
 
-    private function allTabsRemovedHandler( e:Event ):void{
-        loadView("views/products/animals.html");
+    private function allTabsRemovedHandler():void{
+        Window.console.log("allTabsRemovedHandler");
+        selectDefaultView();
     }
 
     private function getDefaultMenuItems():Array {

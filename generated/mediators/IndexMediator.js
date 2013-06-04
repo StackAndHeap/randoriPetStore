@@ -1,10 +1,10 @@
-/** Compiled by the Randori compiler v0.2.4 on Tue Jun 04 10:18:56 CEST 2013 */
+/** Compiled by the Randori compiler v0.2.4 on Tue Jun 04 11:05:45 CEST 2013 */
 
 if (typeof mediators == "undefined")
 	var mediators = {};
 
 mediators.IndexMediator = function() {
-this.clickedAnimal = null;
+this.selectedTabBarItem = null;
 this.tabBar = null;
 this.menuLeft = null;
 this.appBus = null;
@@ -18,8 +18,7 @@ mediators.IndexMediator.prototype.onRegister = function() {
 	this.menuLeft.set_dataProvider(this.getDefaultMenuItems());
 	this.menuLeft.itemClicked.add($createStaticDelegate(this, this.menuClickHandler));
 	this.appBus.rowDoubleClicked.add($createStaticDelegate(this, this.itemDoubleClickedHandler));
-	this.appBus.tabClicked.add($createStaticDelegate(this, this.handleTabClicked));
-	this.appBus.allTabsRemoved.add($createStaticDelegate(this, this.allTabsRemovedHandler));
+	this.tabBar.itemClicked.add($createStaticDelegate(this, this.onItemSelected));
 	this.selectDefaultView();
 };
 
@@ -31,6 +30,23 @@ mediators.IndexMediator.prototype.itemDoubleClickedHandler = function(data) {
 	this.tabBar.addTab(tabItem);
 };
 
+mediators.IndexMediator.prototype.onItemSelected = function(item) {
+	console.log("onItemSelected");
+	this.selectedTabBarItem = item;
+	this.menuLeft.deselectAll();
+	if (item == null) {
+		this.allTabsRemovedHandler();
+	}
+	switch (item.type) {
+		case "animal":
+			var loadAnimal = this.loadView("views\/products\/animals-detail.html");
+			loadAnimal.then($createStaticDelegate(this, this.viewAddedHandler));
+			break;
+		case "misc":
+			break;
+	}
+};
+
 mediators.IndexMediator.prototype.selectDefaultView = function() {
 	if (this.urlRouter.route[0]) {
 		this.menuLeft.selectButton(this.urlRouter.route[0]);
@@ -40,6 +56,7 @@ mediators.IndexMediator.prototype.selectDefaultView = function() {
 };
 
 mediators.IndexMediator.prototype.menuClickHandler = function(item) {
+	this.tabBar.deselectAll();
 	this.urlRouter.replaceRoute(0, item.id);
 	var promise = this.loadView(item.url);
 	promise.then($createStaticDelegate(this, this.viewAddedHandler));
@@ -61,28 +78,21 @@ mediators.IndexMediator.prototype.loadView = function(url) {
 };
 
 mediators.IndexMediator.prototype.viewAddedHandler = function(mediator) {
-	try {
-		var animalDetailMediator = mediator;
-		animalDetailMediator.set_data(this.clickedAnimal);
-	} catch (e) {
+	switch (this.selectedTabBarItem.type) {
+		case "animal":
+			mediator.setData(this.selectedTabBarItem);
+			break;
 	}
 };
 
 mediators.IndexMediator.prototype.onDeregister = function() {
 	this.menuLeft.itemClicked.remove($createStaticDelegate(this, this.menuClickHandler));
-	this.appBus.tabClicked.remove($createStaticDelegate(this, this.handleTabClicked));
-	this.appBus.allTabsRemoved.remove($createStaticDelegate(this, this.allTabsRemovedHandler));
+	this.tabBar.itemClicked.remove($createStaticDelegate(this, this.onItemSelected));
 };
 
-mediators.IndexMediator.prototype.handleTabClicked = function(tab, data) {
-	this.clickedAnimal = data;
-	console.log(data);
-	var promise = this.loadView("views\/products\/animals-detail.html");
-	promise.then($createStaticDelegate(this, this.viewAddedHandler));
-};
-
-mediators.IndexMediator.prototype.allTabsRemovedHandler = function(e) {
-	this.loadView("views\/products\/animals.html");
+mediators.IndexMediator.prototype.allTabsRemovedHandler = function() {
+	console.log("allTabsRemovedHandler");
+	this.selectDefaultView();
 };
 
 mediators.IndexMediator.prototype.getDefaultMenuItems = function() {

@@ -32,6 +32,7 @@ public class TabBar extends AbstractBehavior {
         item.selected = true;
         dataProvider.push(item);
         dataProviderChanged.dispatch();
+        itemClicked.dispatch(item);
     }
 
     public function selectItem(item:TabBarItem):void {
@@ -64,7 +65,7 @@ public class TabBar extends AbstractBehavior {
         }
         dataProvider = items;
         dataProviderChanged.dispatch();
-        itemClicked.dispatch(item);
+        itemClicked.dispatch(selectedItem);
     }
 
     private function dataProviderHasItem(item:TabBarItem):Boolean {
@@ -82,6 +83,11 @@ public class TabBar extends AbstractBehavior {
             var item:TabBarItem = dataProvider[i];
             item.selected = false;
         }
+    }
+
+    public function deselectAll():void {
+        deselectAllTabs();
+        dataProviderChanged.dispatch();
     }
 
     private function render():void {
