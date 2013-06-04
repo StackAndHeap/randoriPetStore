@@ -5,6 +5,7 @@ import eventBus.AppEventBus;
 
 import randori.behaviors.AbstractMediator;
 import randori.jquery.JQuery;
+import randori.webkit.html.HTMLInputElement;
 
 import services.MockMiscService;
 
@@ -12,6 +13,8 @@ public class MiscMediator extends AbstractMediator {
 
     [View]
     public var gridContainer:JQuery;
+    [View]
+    public var filter:JQuery;
     [Inject]
     public var miscService:MockMiscService;
     [Inject]
@@ -20,7 +23,13 @@ public class MiscMediator extends AbstractMediator {
     private var grid:Grid;
 
     override protected function onRegister():void {
+        filter.keyup1( filterData );
         miscService.getAll().then( handleResult );
+    }
+
+    private function filterData(event:randori.jquery.Event):void{
+        var input:HTMLInputElement = event.target as HTMLInputElement;
+        miscService.get( input.value ).then( handleResult );
     }
 
     protected function loadGrid( result:Array ):void {
@@ -31,7 +40,7 @@ public class MiscMediator extends AbstractMediator {
         var col5:Column = new Column( "about", "about", "about" );
         var col6:Column = new Column( "added", "added", "added" );
 
-        var columns:Array = [col1,col2,col3,col4,col5,col6];
+        var columns:Array = [col1,col2 ,col4,col5,col6];
 
         var options:Options = new Options();
         options.forceFitColumns = true;

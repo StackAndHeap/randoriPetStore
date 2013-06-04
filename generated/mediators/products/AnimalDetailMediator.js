@@ -1,4 +1,4 @@
-/** Compiled by the Randori compiler v0.2.4 on Tue Jun 04 11:08:26 CEST 2013 */
+/** Compiled by the Randori compiler v0.2.4 on Tue Jun 04 12:17:33 CEST 2013 */
 
 if (typeof mediators == "undefined")
 	var mediators = {};
@@ -7,8 +7,8 @@ if (typeof mediators.products == "undefined")
 
 mediators.products.AnimalDetailMediator = function() {
 this.template = null;
-this.templateBuilder = null;
 this.animalService = null;
+this.templateBuilder = null;
 this._data = null;
 randori.behaviors.AbstractMediator.call(this);
 };

@@ -1,4 +1,4 @@
-/** Compiled by the Randori compiler v0.2.4 on Tue Jun 04 11:08:26 CEST 2013 */
+/** Compiled by the Randori compiler v0.2.4 on Tue Jun 04 12:17:55 CEST 2013 */
 
 if (typeof mediators == "undefined")
 	var mediators = {};
@@ -10,12 +10,19 @@ mediators.products.MiscMediator = function() {
 	this.appBus = null;
 	this.grid = null;
 	this.gridContainer = null;
+	this.filter = null;
 	randori.behaviors.AbstractMediator.call(this);
 	
 };
 
 mediators.products.MiscMediator.prototype.onRegister = function() {
+	this.filter.keyup($createStaticDelegate(this, this.filterData));
 	this.miscService.getAll().then($createStaticDelegate(this, this.handleResult));
+};
+
+mediators.products.MiscMediator.prototype.filterData = function(event) {
+	var input = event.target;
+	this.miscService.get(input.value).then($createStaticDelegate(this, this.handleResult));
 };
 
 mediators.products.MiscMediator.prototype.loadGrid = function(result) {
@@ -25,7 +32,7 @@ mediators.products.MiscMediator.prototype.loadGrid = function(result) {
 	var col4 = {id:"quantity", name:"quantity", field:"quantity", sortable:true, formatter:null};
 	var col5 = {id:"about", name:"about", field:"about", sortable:true, formatter:null};
 	var col6 = {id:"added", name:"added", field:"added", sortable:true, formatter:null};
-	var columns = [col1, col2, col3, col4, col5, col6];
+	var columns = [col1, col2, col4, col5, col6];
 	var options = {};
 	options.forceFitColumns = true;
 	options.enableCellNavigation = true;
@@ -65,6 +72,7 @@ mediators.products.MiscMediator.injectionPoints = function(t) {
 		case 3:
 			p = randori.behaviors.AbstractMediator.injectionPoints(t);
 			p.push({n:'gridContainer'});
+			p.push({n:'filter'});
 			break;
 		default:
 			p = [];
