@@ -6,8 +6,8 @@ import eventBus.AppEventBus;
 import randori.behaviors.AbstractMediator;
 import randori.jquery.JQuery;
 
-import services.JsonService;
-import services.parsers.MiscParser;
+import services.json.JsonService;
+import services.json.parsers.MiscParser;
 
 public class OrderMediator extends AbstractMediator {
 

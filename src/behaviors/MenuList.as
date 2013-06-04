@@ -1,4 +1,6 @@
 package behaviors {
+import models.MenuListItem;
+
 import randori.behaviors.AbstractBehavior;
 import randori.jquery.Event;
 import randori.jquery.JQuery;
@@ -7,12 +9,12 @@ import randori.signal.SimpleSignal;
 
 public class MenuList extends AbstractBehavior {
 
-    private var _items:Array;
-    public var itemClick:SimpleSignal;
+    private var _dataProvider:Array;
+
+    [Inject] public var itemClicked:SimpleSignal;
 
     public function MenuList(){
         super();
-        itemClick = new SimpleSignal();
     }
 
     override protected function onRegister():void {
@@ -23,24 +25,24 @@ public class MenuList extends AbstractBehavior {
 
     }
 
-    public function get items():Array {
-        return _items;
+    public function get dataProvider():Array {
+        return _dataProvider;
     }
 
-    public function set items(value:Array):void {
-        _items = value;
+    public function set dataProvider(value:Array):void {
+        _dataProvider = value;
         render();
     }
 
     private function render():void {
         var div:JQuery = JQueryStatic.J("<ul></ul>");
-        for ( var i:uint=0; i<items.length; i++ ){
-            var menuItem:Object = items[i];
+        for ( var i:uint=0; i<dataProvider.length; i++ ){
+            var menuItem:MenuListItem = dataProvider[i];
             var button:JQuery = JQueryStatic.J("<li></li>");
             button.addClass1("button");
             button.html(menuItem.label);
-            button.attr2("data-link",menuItem.url);
-            button.attr2("data-id","button"+i);
+            button.attr2("data-link", menuItem.url);
+            button.attr2("data-id", menuItem.id);
             button.click1(buttonClickHandler);
             div.append(button);
         }
@@ -51,20 +53,25 @@ public class MenuList extends AbstractBehavior {
 
     private function buttonClickHandler( event:Event ):void{
         var clickedButton:JQuery = JQueryStatic.J( event.currentTarget );
-        selectButton( clickedButton, event );
+        selectButton(clickedButton.attr("data-id"));
     }
 
-    private function selectButton( clickedButton:JQuery, event:Event=null ):void {
+    public function selectButton(id:String):void {
         var children:JQuery = decoratedNode.children().children();
         for ( var i:uint=0; i<children.length; i++ ){
             var button:JQuery = children.eq(i);
-            if(button.attr1("data-id") == clickedButton.attr1("data-id")){
+            if(button.attr1("data-id") == id){
                 button.addClass("selected");
             }else{
                 button.removeClass("selected");
             }
         }
-        if(event) itemClick.dispatch(event);
+        for(var j:uint = 0; j<dataProvider.length; j++) {
+            var item:MenuListItem = dataProvider[j] as MenuListItem;
+            if(item.id == id) {
+                itemClicked.dispatch(item);
+            }
+        }
     }
 }
 }

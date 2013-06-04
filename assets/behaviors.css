@@ -1,6 +1,6 @@
 /* Behaviors */
 .tabBar {
-    -randori-behavior: "behaviors.TabBar";
+    -randori-behavior: "behaviors.tabbar.TabBar";
 }
 .viewStack {
     -randori-behavior: "randori.behaviors.ViewStack";

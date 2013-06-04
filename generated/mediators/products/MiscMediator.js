@@ -1,4 +1,4 @@
-/** Compiled by the Randori compiler v0.2.4 on Fri May 31 14:11:11 CEST 2013 */
+/** Compiled by the Randori compiler v0.2.4 on Tue Jun 04 10:16:35 CEST 2013 */
 
 if (typeof mediators == "undefined")
 	var mediators = {};
@@ -6,22 +6,16 @@ if (typeof mediators.products == "undefined")
 	mediators.products = {};
 
 mediators.products.MiscMediator = function() {
-	this.added = null;
-	this.about = null;
-	this.gridContainer = null;
-	this.picture = null;
+	this.miscService = null;
 	this.appBus = null;
-	this.name = null;
-	this.service = null;
 	this.grid = null;
-	this.quantity = 0;
-	this.animal = null;
+	this.gridContainer = null;
 	randori.behaviors.AbstractMediator.call(this);
 	
 };
 
 mediators.products.MiscMediator.prototype.onRegister = function() {
-	this.service.get("assets\/data\/things.json", new services.parsers.MiscParser()).then($createStaticDelegate(this, this.handleResult));
+	this.miscService.getAll().then($createStaticDelegate(this, this.handleResult));
 };
 
 mediators.products.MiscMediator.prototype.loadGrid = function(result) {
@@ -53,7 +47,6 @@ mediators.products.MiscMediator.className = "mediators.products.MiscMediator";
 mediators.products.MiscMediator.getClassDependencies = function(t) {
 	var p;
 	p = [];
-	p.push('services.parsers.MiscParser');
 	p.push('Slick.Grid');
 	return p;
 };
@@ -63,7 +56,7 @@ mediators.products.MiscMediator.injectionPoints = function(t) {
 	switch (t) {
 		case 1:
 			p = randori.behaviors.AbstractMediator.injectionPoints(t);
-			p.push({n:'service', t:'services.JsonService', r:0, v:null});
+			p.push({n:'miscService', t:'services.MockMiscService', r:0, v:null});
 			p.push({n:'appBus', t:'eventBus.AppEventBus', r:0, v:null});
 			break;
 		case 2:

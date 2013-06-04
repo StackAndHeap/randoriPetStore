@@ -8,22 +8,18 @@ import models.Animal;
 import randori.behaviors.AbstractMediator;
 import randori.jquery.JQuery;
 
-import services.JsonService;
-import services.parsers.AnimalParser;
+import services.MockAnimalService;
 
 public class AnimalMediator extends AbstractMediator {
 
-    [View]
-    public var gridContainer:JQuery;
-    [Inject]
-    public var service:JsonService;
-    [Inject]
-    public var appBus:AppEventBus;
+    [View] public var gridContainer:JQuery;
+    [Inject] public var animalService:MockAnimalService;
+    [Inject] public var appBus:AppEventBus;
 
     private var grid:Grid;
 
     override protected function onRegister():void {
-        service.get( "assets/data/animals50.json",new AnimalParser() ).then( handleResult );
+        animalService.getAll().then( handleResult );
     }
 
     private function handleResult( result:Array ):void {
@@ -34,12 +30,11 @@ public class AnimalMediator extends AbstractMediator {
         var col1:Column = new Column("name", "Name", "name" );
         var col2:Column = new Column("age", "Age", "age" );
         var col4:Column = new Column("animal", "Animal", "animal" );
-        var col5:Column = new Column("picture", "Picture", "picture" );
         var col6:Column = new Column("gender", "Gender", "gender" );
         var col7:Column = new Column("about", "About", "about" );
         var col8:Column = new Column("registered", "Registered", "registered" );
 
-        var columns:Array = [col1,col2,col4,col5,col6,col7,col8];
+        var columns:Array = [col1,col2,col4,col6,col7,col8];
 
         var options:Options = new Options();
         options.enableCellNavigation = true;
@@ -83,7 +78,6 @@ public class AnimalMediator extends AbstractMediator {
     private function cellDblClickHandler( e:*, args:Object  ):void {
         var selectedRow:int =  args.row;
         var selectedData:Object = args.grid.getData()[ selectedRow ];
-//        Window.console.log( "row changed", selectedData );
         appBus.rowDoubleClicked.dispatch( selectedData as Animal );
     }
 

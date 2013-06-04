@@ -51,12 +51,14 @@ header{
 
 .menu-top  a
 {
+    cursor: pointer;
     font-weight:800;
     padding-right: 10px;
     color: #404040;
 }
 .menu-top  a:hover
 {
+    cursor: pointer;
     text-decoration: none;
     color: #404040;
 }
@@ -79,7 +81,7 @@ header{
     cursor: hand;
 }
 
-.menu-left{ position: absolute;  top: 124px;}
+.menu-left{ position: absolute;  top: 160px;}
 .menu-left ul{ margin: 0 }
 .menu-left li{ list-style: none; line-height: 55px;width: 315px;background-color: #f9f9f9; margin-bottom: 5px;cursor: pointer; padding: 0px 15px; color: Background }
 .menu-left li:hover{ background-color: #f8f3ec }
@@ -102,7 +104,7 @@ header{
 .content{
   background-color:#fff;
   padding: 20px;
-  position:absolute; top:124px; bottom:0px; left:350px; right:0px; overflow:auto;
+  position:absolute; top:160px; bottom:0px; left:350px; right:0px; overflow:auto;
 
 }
 

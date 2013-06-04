@@ -1,60 +1,72 @@
 package mediators {
 import behaviors.MenuList;
-import behaviors.TabBar;
+import behaviors.tabbar.TabBar;
+import behaviors.tabbar.TabBarItem;
 
 import eventBus.AppEventBus;
 
 import mediators.products.AnimalDetailMediator;
 
 import models.Animal;
+import models.MenuListItem;
 
 import randori.async.Promise;
 import randori.behaviors.AbstractMediator;
 import randori.behaviors.ViewStack;
 import randori.jquery.Event;
 import randori.jquery.JQuery;
-import randori.jquery.JQueryStatic;
 import randori.webkit.page.Window;
+
+import router.URLRouter;
 
 public class IndexMediator extends AbstractMediator {
 
-    [View] public var tabBar:TabBar;
     [View] public var menuLeft:MenuList;
     [View] public var myViewStack:ViewStack;
+    [View] public var tabBar:TabBar;
 
     [Inject] public var appBus:AppEventBus;
+    [Inject] public var urlRouter:URLRouter;
 
     private var clickedAnimal:Animal;
     private var views:Array;
 
-    public function IndexMediator( ) {}
-
-    override protected function onRegister():void {
-
-        menuLeft.items = [
-            {label:"Animals",url:"views/products/animals.html"},
-            {label:"Misc",url:"views/products/misc.html"},
-            {label:"Closed Orders",url:"views/products/animals.html"},
-            {label:"Open Orders",url:"views/products/animals.html"},
-            {label:"Processing Orders",url:"views/products/animals.html"},
-        ];
-
-        menuLeft.itemClick.add(menuClickHandler);
-
-        appBus.rowDoubleClicked.add( handleAddTab );
-        appBus.tabClicked.add( handleTabClicked );
-        appBus.allTabsRemoved.add( allTabsRemovedHandler );
+    public function IndexMediator( ) {
 
     }
 
-    private function menuClickHandler( event:Event ):void {
-        var button:JQuery = JQueryStatic.J(event.target);
-        var viewUrl:String = button.attr1("data-link");
+    override protected function onRegister():void {
+        menuLeft.dataProvider = getDefaultMenuItems();
 
-        var promise:Promise = loadView( viewUrl );
+        menuLeft.itemClicked.add(menuClickHandler);
+        appBus.rowDoubleClicked.add(itemDoubleClickedHandler);
+        appBus.tabClicked.add( handleTabClicked );
+        appBus.allTabsRemoved.add( allTabsRemovedHandler );
+
+        selectDefaultView();
+    }
+
+    private function itemDoubleClickedHandler(data:Animal):void {
+        var tabItem:TabBarItem = new TabBarItem();
+        tabItem.id = data.id;
+        tabItem.label = data.name;
+        tabItem.type = "animal";
+        tabBar.addTab(tabItem);
+
+    }
+
+    private function selectDefaultView():void {
+        if(urlRouter.route[0]) {
+            menuLeft.selectButton(urlRouter.route[0]);
+        } else {
+            menuLeft.selectButton("animalsBtn");
+        }
+    }
+
+    private function menuClickHandler( item:MenuListItem ):void {
+        urlRouter.replaceRoute(0,item.id);
+        var promise:Promise = loadView( item.url );
         promise.then( viewAddedHandler );
-
-        tabBar.deselectAllTabs();
     }
 
     private function loadView(url:String):Promise {
@@ -79,22 +91,16 @@ public class IndexMediator extends AbstractMediator {
         try{
             var animalDetailMediator:AnimalDetailMediator = mediator as AnimalDetailMediator;
             animalDetailMediator.data = clickedAnimal;
-        }catch(e:Error){}
+        }catch(e:Error){
+        }
     }
 
     override protected function onDeregister():void {
+        menuLeft.itemClicked.remove(menuClickHandler);
+        appBus.tabClicked.remove( handleTabClicked );
+        appBus.allTabsRemoved.remove( allTabsRemovedHandler );
 
-        appBus.rowDoubleClicked.remove( handleAddTab );
     }
-
-    private function handleAddTab ( selectedAnimal:Animal ):void{
-        this.clickedAnimal = selectedAnimal;
-        var tabName:String = selectedAnimal.name;
-        this.tabBar.addTab("#"+tabName, tabName, selectedAnimal);
-        var promise:Promise = loadView("views/products/animals-detail.html");
-        promise.then( viewAddedHandler );
-    }
-
     private function handleTabClicked ( tab:JQuery, data:* ) :void{
         this.clickedAnimal = data;
         Window.console.log(data);
@@ -106,5 +112,25 @@ public class IndexMediator extends AbstractMediator {
         loadView("views/products/animals.html");
     }
 
+    private function getDefaultMenuItems():Array {
+        var animalsBtn:MenuListItem = new MenuListItem();
+        animalsBtn.id = "animalsBtn";
+        animalsBtn.label = "Animals";
+        animalsBtn.url = "views/products/animals.html";
+        var miscBtn:MenuListItem = new MenuListItem();
+        miscBtn.id = "miscBtn";
+        miscBtn.label = "Misc";
+        miscBtn.url = "views/products/misc.html";
+        var closedOrdersBtn:MenuListItem = new MenuListItem();
+        closedOrdersBtn.id = "closedOrdersBtn";
+        closedOrdersBtn.label = "Closed Orders";
+        closedOrdersBtn.url = "views/products/animals.html";
+        var processingOrdersBtn:MenuListItem = new MenuListItem();
+        processingOrdersBtn.id = "processingOrdersBtn";
+        processingOrdersBtn.label = "Processing Orders";
+        processingOrdersBtn.url = "views/products/animals.html";
+
+        return [animalsBtn,miscBtn,closedOrdersBtn,processingOrdersBtn];
+    }
 }
 }

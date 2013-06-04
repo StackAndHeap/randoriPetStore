@@ -1,4 +1,4 @@
-/** Compiled by the Randori compiler v0.2.4 on Fri May 31 14:11:11 CEST 2013 */
+/** Compiled by the Randori compiler v0.2.4 on Tue Jun 04 10:16:35 CEST 2013 */
 
 if (typeof mediators == "undefined")
 	var mediators = {};
@@ -8,14 +8,14 @@ if (typeof mediators.products == "undefined")
 mediators.products.AnimalMediator = function() {
 	this.gridContainer = null;
 	this.appBus = null;
-	this.service = null;
+	this.animalService = null;
 	this.grid = null;
 	randori.behaviors.AbstractMediator.call(this);
 	
 };
 
 mediators.products.AnimalMediator.prototype.onRegister = function() {
-	this.service.get("assets\/data\/animals50.json", new services.parsers.AnimalParser()).then($createStaticDelegate(this, this.handleResult));
+	this.animalService.getAll().then($createStaticDelegate(this, this.handleResult));
 };
 
 mediators.products.AnimalMediator.prototype.handleResult = function(result) {
@@ -26,11 +26,10 @@ mediators.products.AnimalMediator.prototype.loadGrid = function(result) {
 	var col1 = {id:"name", name:"Name", field:"name", sortable:true, formatter:null};
 	var col2 = {id:"age", name:"Age", field:"age", sortable:true, formatter:null};
 	var col4 = {id:"animal", name:"Animal", field:"animal", sortable:true, formatter:null};
-	var col5 = {id:"picture", name:"Picture", field:"picture", sortable:true, formatter:null};
 	var col6 = {id:"gender", name:"Gender", field:"gender", sortable:true, formatter:null};
 	var col7 = {id:"about", name:"About", field:"about", sortable:true, formatter:null};
 	var col8 = {id:"registered", name:"Registered", field:"registered", sortable:true, formatter:null};
-	var columns = [col1, col2, col4, col5, col6, col7, col8];
+	var columns = [col1, col2, col4, col6, col7, col8];
 	var options = {};
 	options.enableCellNavigation = true;
 	options.enableColumnReorder = false;
@@ -75,7 +74,6 @@ mediators.products.AnimalMediator.className = "mediators.products.AnimalMediator
 mediators.products.AnimalMediator.getClassDependencies = function(t) {
 	var p;
 	p = [];
-	p.push('services.parsers.AnimalParser');
 	p.push('Slick.RowSelectionModel');
 	p.push('Slick.Grid');
 	return p;
@@ -86,7 +84,7 @@ mediators.products.AnimalMediator.injectionPoints = function(t) {
 	switch (t) {
 		case 1:
 			p = randori.behaviors.AbstractMediator.injectionPoints(t);
-			p.push({n:'service', t:'services.JsonService', r:0, v:null});
+			p.push({n:'animalService', t:'services.MockAnimalService', r:0, v:null});
 			p.push({n:'appBus', t:'eventBus.AppEventBus', r:0, v:null});
 			break;
 		case 2:
