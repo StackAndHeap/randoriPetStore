@@ -15,11 +15,16 @@ public class IndexMediator extends AbstractMediator {
 
     override protected function onRegister():void {
         appBus.login.add( loginHandler );
+        appBus.logout.add( logoutHandler );
         mainViewStack.pushView( "views/login/login.html" )
     }
 
     private function loginHandler():void{
         mainViewStack.pushView( "views/content/content.html" )
+    }
+
+    private function logoutHandler():void{
+        mainViewStack.pushView( "views/login/login.html" )
     }
 
     override protected function onDeregister():void {

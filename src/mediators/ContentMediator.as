@@ -12,6 +12,8 @@ import models.*;
 import randori.async.Promise;
 import randori.behaviors.AbstractMediator;
 import randori.behaviors.ViewStack;
+import randori.jquery.Event;
+import randori.jquery.JQuery;
 import randori.webkit.page.Window;
 
 import router.URLRouter;
@@ -21,6 +23,7 @@ public class ContentMediator extends AbstractMediator {
     [View] public var menuLeft:MenuList;
     [View] public var myViewStack:ViewStack;
     [View] public var tabBar:TabBar;
+    [View] public  var button_logout:JQuery;
 
     [Inject] public var appBus:AppEventBus;
     [Inject] public var urlRouter:URLRouter;
@@ -29,6 +32,8 @@ public class ContentMediator extends AbstractMediator {
 
 
     override protected function onRegister():void {
+        button_logout.click(logoutClickHandler);
+
         menuLeft.dataProvider = getDefaultMenuItems();
 
         menuLeft.itemClicked.add(menuClickHandler);
@@ -40,6 +45,9 @@ public class ContentMediator extends AbstractMediator {
         selectDefaultView();
     }
 
+    private function logoutClickHandler(e:Event):void{
+        appBus.logout.dispatch();
+    }
     private function itemDoubleClickedHandler(data:Animal):void {
         var tabItem:TabBarItem = new TabBarItem();
         tabItem.id = data.id;
