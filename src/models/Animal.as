@@ -27,6 +27,7 @@ package models {
 [JavaScript(export="false",name="Object",mode="json")]
 public class Animal {
 
+    public var id:int;
     public var name:String;
     public var age:int;
     public var specie:String;

@@ -1,4 +1,4 @@
-package services.parsers {
+package services.json.parsers {
 import core.JSON;
 
 import models.Misc;

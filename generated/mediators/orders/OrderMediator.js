@@ -1,4 +1,4 @@
-/** Compiled by the Randori compiler v0.2.4 on Fri May 31 15:00:32 CEST 2013 */
+/** Compiled by the Randori compiler v0.2.4 on Tue Jun 04 10:16:35 CEST 2013 */
 
 if (typeof mediators == "undefined")
 	var mediators = {};
@@ -15,7 +15,7 @@ mediators.orders.OrderMediator = function() {
 };
 
 mediators.orders.OrderMediator.prototype.onRegister = function() {
-	this.service.get("assets\/data\/things.json", new services.parsers.MiscParser()).then($createStaticDelegate(this, this.handleResult));
+	this.service.get("assets\/data\/things.json", new services.json.parsers.MiscParser()).then($createStaticDelegate(this, this.handleResult));
 };
 
 mediators.orders.OrderMediator.prototype.loadGrid = function(result) {
@@ -46,7 +46,7 @@ mediators.orders.OrderMediator.className = "mediators.orders.OrderMediator";
 mediators.orders.OrderMediator.getClassDependencies = function(t) {
 	var p;
 	p = [];
-	p.push('services.parsers.MiscParser');
+	p.push('services.json.parsers.MiscParser');
 	p.push('Slick.Grid');
 	return p;
 };
@@ -56,7 +56,7 @@ mediators.orders.OrderMediator.injectionPoints = function(t) {
 	switch (t) {
 		case 1:
 			p = randori.behaviors.AbstractMediator.injectionPoints(t);
-			p.push({n:'service', t:'services.JsonService', r:0, v:null});
+			p.push({n:'service', t:'services.json.JsonService', r:0, v:null});
 			p.push({n:'appBus', t:'eventBus.AppEventBus', r:0, v:null});
 			break;
 		case 2:

@@ -1,4 +1,4 @@
-/** Compiled by the Randori compiler v0.2.4 on Fri May 31 15:00:32 CEST 2013 */
+/** Compiled by the Randori compiler v0.2.4 on Tue Jun 04 10:16:35 CEST 2013 */
 
 if (typeof mediators == "undefined")
 	var mediators = {};
@@ -8,14 +8,14 @@ if (typeof mediators.products == "undefined")
 mediators.products.AnimalMediator = function() {
 	this.gridContainer = null;
 	this.appBus = null;
-	this.service = null;
+	this.animalService = null;
 	this.grid = null;
 	randori.behaviors.AbstractMediator.call(this);
 	
 };
 
 mediators.products.AnimalMediator.prototype.onRegister = function() {
-	this.service.get("assets\/data\/animals50.json", new services.parsers.AnimalParser()).then($createStaticDelegate(this, this.handleResult));
+	this.animalService.getAll().then($createStaticDelegate(this, this.handleResult));
 };
 
 mediators.products.AnimalMediator.prototype.handleResult = function(result) {
@@ -74,7 +74,6 @@ mediators.products.AnimalMediator.className = "mediators.products.AnimalMediator
 mediators.products.AnimalMediator.getClassDependencies = function(t) {
 	var p;
 	p = [];
-	p.push('services.parsers.AnimalParser');
 	p.push('Slick.RowSelectionModel');
 	p.push('Slick.Grid');
 	return p;
@@ -85,7 +84,7 @@ mediators.products.AnimalMediator.injectionPoints = function(t) {
 	switch (t) {
 		case 1:
 			p = randori.behaviors.AbstractMediator.injectionPoints(t);
-			p.push({n:'service', t:'services.JsonService', r:0, v:null});
+			p.push({n:'animalService', t:'services.MockAnimalService', r:0, v:null});
 			p.push({n:'appBus', t:'eventBus.AppEventBus', r:0, v:null});
 			break;
 		case 2:

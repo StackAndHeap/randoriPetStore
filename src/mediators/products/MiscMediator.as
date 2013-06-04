@@ -6,29 +6,22 @@ import eventBus.AppEventBus;
 import randori.behaviors.AbstractMediator;
 import randori.jquery.JQuery;
 
-import services.JsonService;
-import services.parsers.MiscParser;
+import services.MockMiscService;
 
 public class MiscMediator extends AbstractMediator {
 
     [View]
     public var gridContainer:JQuery;
     [Inject]
-    public var service:JsonService;
+    public var miscService:MockMiscService;
     [Inject]
     public var appBus:AppEventBus;
 
     private var grid:Grid;
 
     override protected function onRegister():void {
-        service.get( "assets/data/things.json",new MiscParser() ).then( handleResult );
+        miscService.getAll().then( handleResult );
     }
-    public var name:String;
-    public var animal:String;
-    public var picture:String;
-    public var quantity:int;
-    public var about:String;
-    public var added:String;
 
     protected function loadGrid( result:Array ):void {
         var col1:Column = new Column( "name", "Name", "name" );

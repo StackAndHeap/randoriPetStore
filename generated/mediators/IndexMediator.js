@@ -1,4 +1,4 @@
-/** Compiled by the Randori compiler v0.2.4 on Fri May 31 15:00:32 CEST 2013 */
+/** Compiled by the Randori compiler v0.2.4 on Tue Jun 04 10:18:56 CEST 2013 */
 
 if (typeof mediators == "undefined")
 	var mediators = {};
@@ -9,6 +9,7 @@ this.tabBar = null;
 this.menuLeft = null;
 this.appBus = null;
 this.views = null;
+this.urlRouter = null;
 this.myViewStack = null;
 randori.behaviors.AbstractMediator.call(this);
 };
@@ -16,23 +17,32 @@ randori.behaviors.AbstractMediator.call(this);
 mediators.IndexMediator.prototype.onRegister = function() {
 	this.menuLeft.set_dataProvider(this.getDefaultMenuItems());
 	this.menuLeft.itemClicked.add($createStaticDelegate(this, this.menuClickHandler));
-	this.appBus.rowDoubleClicked.add($createStaticDelegate(this, this.handleAddTab));
+	this.appBus.rowDoubleClicked.add($createStaticDelegate(this, this.itemDoubleClickedHandler));
 	this.appBus.tabClicked.add($createStaticDelegate(this, this.handleTabClicked));
 	this.appBus.allTabsRemoved.add($createStaticDelegate(this, this.allTabsRemovedHandler));
 	this.selectDefaultView();
 };
 
+mediators.IndexMediator.prototype.itemDoubleClickedHandler = function(data) {
+	var tabItem = new behaviors.tabbar.TabBarItem();
+	tabItem.id = data.id;
+	tabItem.label = data.name;
+	tabItem.type = "animal";
+	this.tabBar.addTab(tabItem);
+};
+
 mediators.IndexMediator.prototype.selectDefaultView = function() {
-	this.menuLeft.selectButton("animalsBtn");
-	var promise = this.loadView("views\/products\/animals.html");
-	promise.then($createStaticDelegate(this, this.viewAddedHandler));
-	this.tabBar.deselectAllTabs();
+	if (this.urlRouter.route[0]) {
+		this.menuLeft.selectButton(this.urlRouter.route[0]);
+	} else {
+		this.menuLeft.selectButton("animalsBtn");
+	}
 };
 
 mediators.IndexMediator.prototype.menuClickHandler = function(item) {
+	this.urlRouter.replaceRoute(0, item.id);
 	var promise = this.loadView(item.url);
 	promise.then($createStaticDelegate(this, this.viewAddedHandler));
-	this.tabBar.deselectAllTabs();
 };
 
 mediators.IndexMediator.prototype.loadView = function(url) {
@@ -60,17 +70,8 @@ mediators.IndexMediator.prototype.viewAddedHandler = function(mediator) {
 
 mediators.IndexMediator.prototype.onDeregister = function() {
 	this.menuLeft.itemClicked.remove($createStaticDelegate(this, this.menuClickHandler));
-	this.appBus.rowDoubleClicked.remove($createStaticDelegate(this, this.handleAddTab));
 	this.appBus.tabClicked.remove($createStaticDelegate(this, this.handleTabClicked));
 	this.appBus.allTabsRemoved.remove($createStaticDelegate(this, this.allTabsRemovedHandler));
-};
-
-mediators.IndexMediator.prototype.handleAddTab = function(selectedAnimal) {
-	this.clickedAnimal = selectedAnimal;
-	var tabName = selectedAnimal.name;
-	this.tabBar.addTab("#" + tabName, tabName, selectedAnimal);
-	var promise = this.loadView("views\/products\/animals-detail.html");
-	promise.then($createStaticDelegate(this, this.viewAddedHandler));
 };
 
 mediators.IndexMediator.prototype.handleTabClicked = function(tab, data) {
@@ -112,6 +113,7 @@ mediators.IndexMediator.getClassDependencies = function(t) {
 	var p;
 	p = [];
 	p.push('randori.async.Promise');
+	p.push('behaviors.tabbar.TabBarItem');
 	return p;
 };
 
@@ -121,15 +123,16 @@ mediators.IndexMediator.injectionPoints = function(t) {
 		case 1:
 			p = randori.behaviors.AbstractMediator.injectionPoints(t);
 			p.push({n:'appBus', t:'eventBus.AppEventBus', r:0, v:null});
+			p.push({n:'urlRouter', t:'router.URLRouter', r:0, v:null});
 			break;
 		case 2:
 			p = randori.behaviors.AbstractMediator.injectionPoints(t);
 			break;
 		case 3:
 			p = randori.behaviors.AbstractMediator.injectionPoints(t);
-			p.push({n:'tabBar', t:'behaviors.TabBar'});
 			p.push({n:'menuLeft', t:'behaviors.MenuList'});
 			p.push({n:'myViewStack', t:'randori.behaviors.ViewStack'});
+			p.push({n:'tabBar', t:'behaviors.tabbar.TabBar'});
 			break;
 		default:
 			p = [];

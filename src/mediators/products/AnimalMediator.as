@@ -8,22 +8,18 @@ import models.Animal;
 import randori.behaviors.AbstractMediator;
 import randori.jquery.JQuery;
 
-import services.JsonService;
-import services.parsers.AnimalParser;
+import services.MockAnimalService;
 
 public class AnimalMediator extends AbstractMediator {
 
-    [View]
-    public var gridContainer:JQuery;
-    [Inject]
-    public var service:JsonService;
-    [Inject]
-    public var appBus:AppEventBus;
+    [View] public var gridContainer:JQuery;
+    [Inject] public var animalService:MockAnimalService;
+    [Inject] public var appBus:AppEventBus;
 
     private var grid:Grid;
 
     override protected function onRegister():void {
-        service.get( "assets/data/animals50.json",new AnimalParser() ).then( handleResult );
+        animalService.getAll().then( handleResult );
     }
 
     private function handleResult( result:Array ):void {
@@ -82,7 +78,6 @@ public class AnimalMediator extends AbstractMediator {
     private function cellDblClickHandler( e:*, args:Object  ):void {
         var selectedRow:int =  args.row;
         var selectedData:Object = args.grid.getData()[ selectedRow ];
-//        Window.console.log( "row changed", selectedData );
         appBus.rowDoubleClicked.dispatch( selectedData as Animal );
     }
 
