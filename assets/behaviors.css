@@ -34,3 +34,14 @@
 .textInput {
     -randori-behavior: "behaviors.components.TextInput";
 }
+
+.dropDown {
+    -randori-behavior: "behaviors.components.DropDown";
+}
+
+.textArea {
+    -randori-behavior: "behaviors.components.TextArea";
+}
+.image {
+    -randori-behavior: "behaviors.components.Image";
+}

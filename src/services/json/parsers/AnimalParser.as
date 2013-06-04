@@ -11,8 +11,8 @@ public class AnimalParser {
 
         for ( var i:int=0; i<json.length; i++ ) {
             var animal:Animal = json[ i ];
-            animal.picture =  "<img src='" + json[ i ][ "picture" ] + "'/>";
-            animal.picture_large =  "<img src='" + json[ i ][ "picture_large" ] + "'/>";
+            animal.picture =  json[ i ][ "picture" ];
+            animal.picture_large =  json[ i ][ "picture_large" ] ;
 
         }
 
