@@ -24,6 +24,7 @@ public class AnimalDetailMediator extends AbstractMediator {
     public function AnimalDetailMediator():void{}
 
     public function render():void{
+
         var row:JQuery;
         var div:JQuery = JQueryStatic.J("<div></div>");
         row = templateBuilder.renderTemplateClone(_data).children();
@@ -33,7 +34,6 @@ public class AnimalDetailMediator extends AbstractMediator {
         decoratedNode.empty();
         decoratedNode.append(div.children());
     }
-
 
     override protected function onPreRegister():void {
         super.onPreRegister();

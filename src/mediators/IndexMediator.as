@@ -70,7 +70,6 @@ public class IndexMediator extends AbstractMediator {
                     loadAnimal.then(viewAddedHandler);
                 break;
             case "misc":
-
                 break;
         }
     }
