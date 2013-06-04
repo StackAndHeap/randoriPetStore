@@ -27,12 +27,16 @@ public class ContentMediator extends AbstractMediator {
 
     private var selectedTabBarItem:TabBarItem;
 
+
     override protected function onRegister():void {
         menuLeft.dataProvider = getDefaultMenuItems();
+
         menuLeft.itemClicked.add(menuClickHandler);
-        tabBar.itemClicked.add(onItemSelected);
 
         appBus.rowDoubleClicked.add(itemDoubleClickedHandler);
+
+        tabBar.itemClicked.add(onItemSelected);
+
         selectDefaultView();
     }
 
@@ -57,11 +61,10 @@ public class ContentMediator extends AbstractMediator {
 
         switch (item.type) {
             case "animal":
-                    var loadAnimal:Promise = loadView("views/products/animals-detail.html");
-                    loadAnimal.then(viewAddedHandler);
+                var loadAnimal:Promise = loadView("views/products/animals-detail.html");
+                loadAnimal.then(viewAddedHandler);
                 break;
             case "misc":
-
                 break;
         }
     }
@@ -149,7 +152,5 @@ public class ContentMediator extends AbstractMediator {
 
         return [animalsBtn,miscBtn,closedOrdersBtn,processingOrdersBtn];
     }
-
-
 }
 }

@@ -1,28 +1,13 @@
-/** Compiled by the Randori compiler v0.2.4 on Tue Jun 04 14:24:24 CEST 2013 */
+/** Compiled by the Randori compiler v0.2.4 on Tue Jun 04 14:35:26 CEST 2013 */
 
 if (typeof mediators == "undefined")
 	var mediators = {};
 
 mediators.IndexMediator = function() {
 	this.appBus = null;
-	this.views = null;
 	this.urlRouter = null;
-	this.mainViewStack = null;
 	randori.behaviors.AbstractMediator.call(this);
 	
-};
-
-mediators.IndexMediator.prototype.onRegister = function() {
-	this.mainViewStack.pushView("views\/login\/login.html");
-	this.appBus.login.add($createStaticDelegate(this, this.loginHandler));
-};
-
-mediators.IndexMediator.prototype.loginHandler = function() {
-	console.log("bal");
-	this.mainViewStack.pushView("views\/content\/content.html");
-};
-
-mediators.IndexMediator.prototype.onDeregister = function() {
 };
 
 $inherit(mediators.IndexMediator, randori.behaviors.AbstractMediator);
@@ -47,7 +32,6 @@ mediators.IndexMediator.injectionPoints = function(t) {
 			break;
 		case 3:
 			p = randori.behaviors.AbstractMediator.injectionPoints(t);
-			p.push({n:'mainViewStack', t:'randori.behaviors.ViewStack'});
 			break;
 		default:
 			p = [];
