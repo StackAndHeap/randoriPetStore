@@ -1,4 +1,4 @@
-/** Compiled by the Randori compiler v0.2.4 on Tue Jun 04 11:05:45 CEST 2013 */
+/** Compiled by the Randori compiler v0.2.4 on Tue Jun 04 11:14:01 CEST 2013 */
 
 if (typeof mediators == "undefined")
 	var mediators = {};
@@ -31,9 +31,9 @@ mediators.IndexMediator.prototype.itemDoubleClickedHandler = function(data) {
 };
 
 mediators.IndexMediator.prototype.onItemSelected = function(item) {
-	console.log("onItemSelected");
 	this.selectedTabBarItem = item;
 	this.menuLeft.deselectAll();
+	this.urlRouter.removeRoute();
 	if (item == null) {
 		this.allTabsRemovedHandler();
 	}
@@ -49,7 +49,14 @@ mediators.IndexMediator.prototype.onItemSelected = function(item) {
 
 mediators.IndexMediator.prototype.selectDefaultView = function() {
 	if (this.urlRouter.route[0]) {
-		this.menuLeft.selectButton(this.urlRouter.route[0]);
+		var items = this.getDefaultMenuItems();
+		for (var i = 0; i < items.length; i++) {
+			var menuItem = items[i];
+			if (menuItem.route == this.urlRouter.route[0]) {
+				this.menuLeft.selectButton(menuItem.id);
+				return;
+			}
+		}
 	} else {
 		this.menuLeft.selectButton("animalsBtn");
 	}
@@ -57,7 +64,7 @@ mediators.IndexMediator.prototype.selectDefaultView = function() {
 
 mediators.IndexMediator.prototype.menuClickHandler = function(item) {
 	this.tabBar.deselectAll();
-	this.urlRouter.replaceRoute(0, item.id);
+	this.urlRouter.replaceRoute(0, item.route);
 	var promise = this.loadView(item.url);
 	promise.then($createStaticDelegate(this, this.viewAddedHandler));
 };
@@ -100,17 +107,21 @@ mediators.IndexMediator.prototype.getDefaultMenuItems = function() {
 	animalsBtn.id = "animalsBtn";
 	animalsBtn.label = "Animals";
 	animalsBtn.url = "views\/products\/animals.html";
+	animalsBtn.route = "animals";
 	var miscBtn = {};
 	miscBtn.id = "miscBtn";
 	miscBtn.label = "Misc";
 	miscBtn.url = "views\/products\/misc.html";
+	miscBtn.route = "misc";
 	var closedOrdersBtn = {};
 	closedOrdersBtn.id = "closedOrdersBtn";
 	closedOrdersBtn.label = "Closed Orders";
 	closedOrdersBtn.url = "views\/products\/animals.html";
+	closedOrdersBtn.route = "closedOrders";
 	var processingOrdersBtn = {};
 	processingOrdersBtn.id = "processingOrdersBtn";
 	processingOrdersBtn.label = "Processing Orders";
+	processingOrdersBtn.route = "processingOrders";
 	processingOrdersBtn.url = "views\/products\/animals.html";
 	return [animalsBtn, miscBtn, closedOrdersBtn, processingOrdersBtn];
 };

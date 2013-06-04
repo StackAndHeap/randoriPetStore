@@ -54,10 +54,11 @@ public class IndexMediator extends AbstractMediator {
     }
 
     private function onItemSelected(item:TabBarItem):void {
-        Window.console.log("onItemSelected");
         selectedTabBarItem = item;
 
         menuLeft.deselectAll();
+
+        urlRouter.removeRoute();
 
         if(item == null) {
             allTabsRemovedHandler();
@@ -76,7 +77,14 @@ public class IndexMediator extends AbstractMediator {
 
     private function selectDefaultView():void {
         if(urlRouter.route[0]) {
-            menuLeft.selectButton(urlRouter.route[0]);
+            var items:Array = getDefaultMenuItems();
+            for(var i:int = 0; i<items.length;i++) {
+                var menuItem:MenuListItem = items[i] as MenuListItem;
+                if(menuItem.route == urlRouter.route[0]) {
+                    menuLeft.selectButton(menuItem.id);
+                    return;
+                }
+            }
         } else {
             menuLeft.selectButton("animalsBtn");
         }
@@ -84,7 +92,7 @@ public class IndexMediator extends AbstractMediator {
 
     private function menuClickHandler( item:MenuListItem ):void {
         tabBar.deselectAll();
-        urlRouter.replaceRoute(0,item.id);
+        urlRouter.replaceRoute(0,item.route);
         var promise:Promise = loadView( item.url );
         promise.then( viewAddedHandler );
     }
@@ -131,17 +139,21 @@ public class IndexMediator extends AbstractMediator {
         animalsBtn.id = "animalsBtn";
         animalsBtn.label = "Animals";
         animalsBtn.url = "views/products/animals.html";
+        animalsBtn.route = "animals";
         var miscBtn:MenuListItem = new MenuListItem();
         miscBtn.id = "miscBtn";
         miscBtn.label = "Misc";
         miscBtn.url = "views/products/misc.html";
+        miscBtn.route = "misc"
         var closedOrdersBtn:MenuListItem = new MenuListItem();
         closedOrdersBtn.id = "closedOrdersBtn";
         closedOrdersBtn.label = "Closed Orders";
         closedOrdersBtn.url = "views/products/animals.html";
+        closedOrdersBtn.route = "closedOrders";
         var processingOrdersBtn:MenuListItem = new MenuListItem();
         processingOrdersBtn.id = "processingOrdersBtn";
         processingOrdersBtn.label = "Processing Orders";
+        processingOrdersBtn.route = "processingOrders";
         processingOrdersBtn.url = "views/products/animals.html";
 
         return [animalsBtn,miscBtn,closedOrdersBtn,processingOrdersBtn];
