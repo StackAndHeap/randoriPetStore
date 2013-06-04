@@ -1,4 +1,4 @@
-/** Compiled by the Randori compiler v0.2.4 on Tue Jun 04 12:21:20 CEST 2013 */
+/** Compiled by the Randori compiler v0.2.4 on Tue Jun 04 13:38:52 CEST 2013 */
 
 if (typeof mediators == "undefined")
 	var mediators = {};
@@ -10,12 +10,19 @@ mediators.products.AnimalMediator = function() {
 	this.appBus = null;
 	this.animalService = null;
 	this.grid = null;
+	this.filter = null;
 	randori.behaviors.AbstractMediator.call(this);
 	
 };
 
 mediators.products.AnimalMediator.prototype.onRegister = function() {
+	this.filter.keyup($createStaticDelegate(this, this.filterData));
 	this.animalService.getAll().then($createStaticDelegate(this, this.handleResult));
+};
+
+mediators.products.AnimalMediator.prototype.filterData = function(event) {
+	var input = event.target;
+	this.animalService.get(input.value).then($createStaticDelegate(this, this.handleResult));
 };
 
 mediators.products.AnimalMediator.prototype.handleResult = function(result) {
@@ -93,6 +100,7 @@ mediators.products.AnimalMediator.injectionPoints = function(t) {
 		case 3:
 			p = randori.behaviors.AbstractMediator.injectionPoints(t);
 			p.push({n:'gridContainer'});
+			p.push({n:'filter'});
 			break;
 		default:
 			p = [];

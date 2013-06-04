@@ -30,3 +30,7 @@
 .simpleTabFragment {
     -randori-fragment: "fragments/SimpleTabFragment.html";
 }
+
+.textInput {
+    -randori-behavior: "behaviors.components.TextInput";
+}
