@@ -19,13 +19,13 @@ public class LoginMediator extends AbstractMediator {
     [Inject] public var appBus:AppEventBus;
 
     override protected function onRegister():void {
-        signinUsername.change( login_inputChangeHandler );
-        signinPassword.change( login_inputChangeHandler );
+        signinUsername.keyup1( login_inputChangeHandler );
+        signinPassword.keyup1( login_inputChangeHandler );
         button_login.click1( loginClickedHandler );
 
-        signupPassword.change( signup_inputChangeHandler );
-        signupEmail.change( signup_inputChangeHandler );
-        signupUsername.change( signup_inputChangeHandler );
+        signupPassword.keyup1( signup_inputChangeHandler );
+        signupEmail.keyup1( signup_inputChangeHandler );
+        signupUsername.keyup1( signup_inputChangeHandler );
         button_register.click1( registerClickedHandler );
 
     }
@@ -41,7 +41,10 @@ public class LoginMediator extends AbstractMediator {
     }
 
     private function loginClickedHandler():void{
-            appBus.login.dispatch();
+            appBus.login.dispatch( {
+                username:signinUsername.val1(),
+                password:signinPassword.val1()
+            });
     }
 
     private function signup_inputChangeHandler(e:Event):void{
