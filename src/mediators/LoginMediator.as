@@ -3,7 +3,6 @@ import eventBus.AppEventBus;
 
 import randori.behaviors.AbstractMediator;
 import randori.jquery.JQuery;
-import randori.webkit.page.Window;
 
 public class LoginMediator extends AbstractMediator {
 
@@ -15,8 +14,7 @@ public class LoginMediator extends AbstractMediator {
     }
 
     private function loginHandler():void{
-        appBus.login.dispatch("e");
-        Window.console.log("klik");
+        appBus.login.dispatch();
     }
 
     override protected function onDeregister():void {
