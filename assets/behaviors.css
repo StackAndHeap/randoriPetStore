@@ -13,6 +13,7 @@
 }
 /* Mediators */
 .simpleApp {
+    -randori-context: "contexts.BoringContext";
     -randori-mediator: "mediators.IndexMediator";
 }
 .loginFragment{
