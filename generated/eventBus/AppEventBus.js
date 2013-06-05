@@ -1,14 +1,15 @@
-/** Compiled by the Randori compiler v0.2.4 on Wed Jun 05 09:22:53 CEST 2013 */
+/** Compiled by the Randori compiler v0.2.4 on Wed Jun 05 09:58:00 CEST 2013 */
 
 if (typeof eventBus == "undefined")
 	var eventBus = {};
 
 eventBus.AppEventBus = function() {
+this.showModal = null;
 this.rowDoubleClicked = null;
-this.tabClicked = null;
 this.allTabsRemoved = null;
-this.login = null;
 this.nameChanged = null;
+this.login = null;
+this.tabClicked = null;
 };
 
 eventBus.AppEventBus.className = "eventBus.AppEventBus";
@@ -28,6 +29,7 @@ eventBus.AppEventBus.injectionPoints = function(t) {
 			p.push({n:'allTabsRemoved', t:'randori.signal.SimpleSignal', r:0, v:null});
 			p.push({n:'login', t:'randori.signal.SimpleSignal', r:0, v:null});
 			p.push({n:'nameChanged', t:'randori.signal.SimpleSignal', r:0, v:null});
+			p.push({n:'showModal', t:'randori.signal.SimpleSignal', r:0, v:null});
 			break;
 		default:
 			p = [];

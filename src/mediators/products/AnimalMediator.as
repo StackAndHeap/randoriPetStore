@@ -15,6 +15,7 @@ public class AnimalMediator extends AbstractMediator {
 
     [View] public var gridContainer:JQuery;
     [View] public var filter:JQuery;
+    [View] public var addBtn:JQuery;
     [Inject] public var animalService:MockAnimalService;
     [Inject] public var appBus:AppEventBus;
 
@@ -23,6 +24,11 @@ public class AnimalMediator extends AbstractMediator {
     override protected function onRegister():void {
         filter.keyup1( filterData );
         animalService.getAll().then( handleResult );
+        addBtn.click(addBtnClickedHandler);
+    }
+
+    private function addBtnClickedHandler(e:randori.jquery.Event):void {
+        appBus.showModal.dispatch("","dit is een titel");
     }
 
     private function filterData(event:randori.jquery.Event):void{

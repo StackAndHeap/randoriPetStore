@@ -36,12 +36,19 @@
     -randori-mediator: "mediators.products.MiscDetailMediator";
 }
 
+.modalFragment {
+    -randori-mediator: "mediators.ModalMediator";
+}
+
 /* Fragments */
 .loginFragment {
     -randori-fragment: "fragments/LoginFragment.html";
 }
 .contentFragment {
     -randori-fragment: "fragments/ContentFragment.html";
+}
+.modalFragment {
+    -randori-fragment: "fragments/ModalFragment.html";
 }
 
 .textInput {

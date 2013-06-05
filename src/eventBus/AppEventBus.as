@@ -10,6 +10,8 @@ public class AppEventBus {
 
     [Inject] public var nameChanged:SimpleSignal;
 
+    [Inject] public var showModal:SimpleSignal;
+
     public function AppEventBus() {}
 }
 }

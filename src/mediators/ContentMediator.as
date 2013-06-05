@@ -27,7 +27,6 @@ public class ContentMediator extends AbstractMediator {
 
     private var selectedTabBarItem:TabBarItem;
 
-
     override protected function onRegister():void {
         menuLeft.dataProvider = getDefaultMenuItems();
 
