@@ -32,9 +32,7 @@ public class ContentMediator extends AbstractMediator {
         menuLeft.dataProvider = getDefaultMenuItems();
 
         menuLeft.itemClicked.add(menuClickHandler);
-
         appBus.rowDoubleClicked.add(itemDoubleClickedHandler);
-
         tabBar.itemClicked.add(onItemSelected);
 
         selectDefaultView();
