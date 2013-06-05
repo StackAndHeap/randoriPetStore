@@ -21,10 +21,11 @@ package models {
 
 [JavaScript(export="false",name="Object",mode="json")]
 public class Misc {
-
+    public var id:int;
     public var name:String;
     public var animal:String;
     public var picture:String;
+    public var picture_large:String;
     public var quantity:int;
     public var about:String;
     public var added:String;

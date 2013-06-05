@@ -32,6 +32,10 @@
     -randori-mediator: "mediators.products.AnimalDetailMediator";
 }
 
+.miscDetailView {
+    -randori-mediator: "mediators.products.MiscDetailMediator";
+}
+
 /* Fragments */
 .loginFragment {
     -randori-fragment: "fragments/LoginFragment.html";

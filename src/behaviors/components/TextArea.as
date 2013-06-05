@@ -4,7 +4,6 @@ import randori.jquery.Event;
 import randori.jquery.JQuery;
 import randori.jquery.JQueryStatic;
 import randori.signal.SimpleSignal;
-import randori.webkit.page.Window;
 
 public class TextArea extends AbstractBehavior {
 
@@ -58,7 +57,6 @@ public class TextArea extends AbstractBehavior {
         div.append(paragraph);
 
         var textinput:JQuery = JQueryStatic.J("<textarea/>");
-        Window.console.log(textinput);
         textinput.attr("cols", "70");
         textinput.attr("rows", "5");
         textinput.css3("display", "inline-block");
@@ -72,7 +70,6 @@ public class TextArea extends AbstractBehavior {
     }
 
     private function keyPressedHandler(e:*):void {
-        Window.console.log(e);
         switch (e.keyCode) {
             case 13:
                 commit(e.currentTarget.value);

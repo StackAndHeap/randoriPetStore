@@ -3,6 +3,8 @@ import Slick.*;
 
 import eventBus.AppEventBus;
 
+import models.Misc;
+
 import randori.behaviors.AbstractMediator;
 import randori.jquery.JQuery;
 import randori.webkit.html.HTMLInputElement;
@@ -48,8 +50,13 @@ public class MiscMediator extends AbstractMediator {
         options.enableColumnReorder = false;
 
         grid = new Grid( gridContainer, result, columns, options);
+        grid.onDblClick.subscribe( cellDblClickHandler );
     }
-
+    private function cellDblClickHandler( e:*, args:Object  ):void {
+        var selectedRow:int =  args.row;
+        var selectedData:Object = args.grid.getData()[ selectedRow ];
+        appBus.rowDoubleClicked.dispatch( selectedData as Misc , "misc");
+    }
     private function handleResult( result:Array ):void {
         loadGrid( result );
     }

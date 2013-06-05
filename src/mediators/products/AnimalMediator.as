@@ -79,14 +79,11 @@ public class AnimalMediator extends AbstractMediator {
 
     }
     private function rowChangedHandler( e:*, args:Object ):void {
-//        var selectedRow:int =  args.rows[0];
-//        var selectedData:Object = args.grid.getData()[ selectedRow ];
-//        Window.console.log( "row changed", selectedData );
     }
     private function cellDblClickHandler( e:*, args:Object  ):void {
         var selectedRow:int =  args.row;
         var selectedData:Object = args.grid.getData()[ selectedRow ];
-        appBus.rowDoubleClicked.dispatch( selectedData as Animal );
+        appBus.rowDoubleClicked.dispatch( selectedData as Animal , "animal");
     }
 
     override protected function onDeregister():void {

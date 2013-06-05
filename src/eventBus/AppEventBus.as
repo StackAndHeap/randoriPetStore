@@ -9,6 +9,8 @@ public class AppEventBus {
     [Inject] public var login:SimpleSignal;
     [Inject] public var logout:SimpleSignal;
 
+    [Inject] public var nameChanged:SimpleSignal;
+
     public function AppEventBus() {}
 }
 }

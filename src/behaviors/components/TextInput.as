@@ -4,7 +4,6 @@ import randori.jquery.Event;
 import randori.jquery.JQuery;
 import randori.jquery.JQueryStatic;
 import randori.signal.SimpleSignal;
-import randori.webkit.page.Window;
 
 public class TextInput extends AbstractBehavior {
 
@@ -71,7 +70,6 @@ public var valueCommit:SimpleSignal;
     }
 
     private function keyPressedHandler(e:*):void {
-        Window.console.log(e);
         switch (e.keyCode) {
             case 13:
                 commit(e.currentTarget.value);
