@@ -147,23 +147,24 @@ public class ContentMediator extends AbstractMediator {
         miscBtn.label = "Misc";
         miscBtn.url = "views/content/products/misc.html";
         miscBtn.route = "misc"
-        var closedOrdersBtn:MenuListItem = new MenuListItem();
-        closedOrdersBtn.id = "closedOrdersBtn";
-        closedOrdersBtn.label = "Closed Orders";
-        closedOrdersBtn.url = "views/content/products/animals.html";
-        closedOrdersBtn.route = "closedOrders";
-        var processingOrdersBtn:MenuListItem = new MenuListItem();
-        processingOrdersBtn.id = "processingOrdersBtn";
-        processingOrdersBtn.label = "Processing Orders";
-        processingOrdersBtn.route = "processingOrders";
-        processingOrdersBtn.url = "views/content/products/animals.html";
+//        var closedOrdersBtn:MenuListItem = new MenuListItem();
+//        closedOrdersBtn.id = "closedOrdersBtn";
+//        closedOrdersBtn.label = "Closed Orders";
+//        closedOrdersBtn.url = "views/content/products/animals.html";
+//        closedOrdersBtn.route = "closedOrders";
+//        var processingOrdersBtn:MenuListItem = new MenuListItem();
+//        processingOrdersBtn.id = "processingOrdersBtn";
+//        processingOrdersBtn.label = "Processing Orders";
+//        processingOrdersBtn.route = "processingOrders";
+//        processingOrdersBtn.url = "views/content/products/animals.html";
         var statsButton:MenuListItem = new MenuListItem();
         statsButton.id = "statsButton";
         statsButton.label = "Statistics";
         statsButton.route = "statistics";
         statsButton.url = "views/content/stats/stats.html";
 
-        return [animalsBtn,miscBtn,closedOrdersBtn,processingOrdersBtn,statsButton];
+//        return [animalsBtn,miscBtn,closedOrdersBtn,processingOrdersBtn,statsButton];
+        return [animalsBtn,miscBtn,statsButton];
     }
 }
 }
