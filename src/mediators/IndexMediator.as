@@ -44,6 +44,7 @@ public class IndexMediator extends AbstractMediator {
         mainViewStack.pushView( "views/content/content.html" );
     }
     private function logoutClickHandler(e:Event):void{
+        header.css3("display","none");
         Window.localStorage.setItem("loggedin","false");
         appBus.logout.dispatch();
     }

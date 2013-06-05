@@ -1,4 +1,4 @@
-/** Compiled by the Randori compiler v0.2.4 on Wed Jun 05 09:58:00 CEST 2013 */
+/** Compiled by the Randori compiler v0.2.4 on Wed Jun 05 10:20:55 CEST 2013 */
 
 if (typeof mediators == "undefined")
 	var mediators = {};
@@ -7,9 +7,9 @@ if (typeof mediators.products == "undefined")
 
 mediators.products.MiscMediator = function() {
 	this.miscService = null;
-	this.gridContainer = null;
 	this.appBus = null;
 	this.grid = null;
+	this.gridContainer = null;
 	this.filter = null;
 	randori.behaviors.AbstractMediator.call(this);
 	

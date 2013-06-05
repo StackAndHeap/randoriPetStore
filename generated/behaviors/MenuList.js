@@ -1,4 +1,4 @@
-/** Compiled by the Randori compiler v0.2.4 on Wed Jun 05 09:56:06 CEST 2013 */
+/** Compiled by the Randori compiler v0.2.4 on Wed Jun 05 10:20:55 CEST 2013 */
 
 if (typeof behaviors == "undefined")
 	var behaviors = {};
