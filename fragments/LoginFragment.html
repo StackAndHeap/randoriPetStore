@@ -11,45 +11,45 @@
     <div class="front-signin well">
         <!--<form action="#" class="signin" method="get">-->
             <div class="placeholding-input username">
-                <label for="signin-email" class="placeholder">Gebruikersnaam</label>
-                <input type="text" id="signin-email" class="text-input email-input" name="session[username_or_email]" title="Gebruikersnaam of e-mailadres" autocomplete="on" tabindex="1">
+                <label for="signinUsername" class="placeholder">Username</label>
+                <input type="text" id="signinUsername" class="text-input email-input" name="session[username_or_email]" title="Gebruikersnaam of e-mailadres" autocomplete="on" tabindex="1" value="Pieter">
             </div>
 
             <div class="placeholding-input">
-                <label for="signin-user-password" class="placeholder">Volledige naam</label>
-                <input type="password" id="signin-user-password" class="text-input" autocomplete="off" name="session[password]" tabindex="2" maxlength="20">
+                <label for="signinPassword" class="placeholder">Password</label>
+                <input type="password" id="signinPassword" class="text-input" autocomplete="off" name="session[password]" tabindex="2" maxlength="20">
             </div>
 
             <div class="remember-forgot">
                 <label class="remember">
                     <input type="checkbox" value="1" name="remember_me" tabindex="3" checked="checked">
-                    <span>Ingelogd blijven</span>
+                    <span>Stay logged in</span>
                 </label>
                 <span class="separator">·</span>
-                <a class="forgot" href="/account/resend_password">Wachtwoord vergeten?</a>
+                <a class="forgot" href="/account/resend_password">Forgot password?</a>
             </div>
 
-            <button type="submit" id="button_login" class="btn signup-btn">Login</button>
+            <button type="submit" id="button_login" class="btn disabled signup-btn" disabled="disabled">Login</button>
         <!--</form>-->
     </div>
 
     <div class="front-signup well">
-        <h2><strong>Nieuw ?</strong> Registreer nu</h2>
+        <h2><strong>New user ?</strong> Register</h2>
 
         <form action="" class="signup" method="post">
             <div class="placeholding-input">
-                <label for="signup-user-name" class="placeholder">Volledige naam</label>
-                <input type="text" id="signup-user-name" class="text-input" autocomplete="off" name="user[name]" maxlength="20">
+                <label for="signupUsername" class="placeholder">Full Name</label>
+                <input type="text" id="signupUsername" class="text-input" autocomplete="off" name="user[name]" maxlength="20">
             </div>
             <div class="placeholding-input">
-                <label for="signup-user-email" class="placeholder">E-mailadres</label>
-                <input type="text" id="signup-user-email" class="text-input email-input" autocomplete="off" name="user[email]">
+                <label for="signupEmail" class="placeholder">E-mail</label>
+                <input type="text" id="signupEmail" class="text-input email-input" autocomplete="off" name="user[email]">
             </div>
             <div class="placeholding-input">
-                <label for="signup-user-password" class="placeholder">Wachtwoord</label>
-                <input type="password" id="signup-user-password" class="text-input" name="user[user_password]">
+                <label for="signupPassword" class="placeholder">Password</label>
+                <input type="password" id="signupPassword" class="text-input" name="user[user_password]">
             </div>
-            <button type="submit" class="btn signup-btn">Registreren</button>
+            <button type="submit" id="button_register" class="btn signup-btn disabled" disabled="disabled">Registrer</button>
         </form>
     </div>
 

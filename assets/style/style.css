@@ -21,16 +21,32 @@ body {
     overflow: hidden;
 }
 
-.viewStack{width: 100%;height: 100%}
+.mainViewStack{
+    position: absolute;
+    top: 160px;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+
+.contentView{
+    position: absolute; left: 0;right: 0;top: 0;bottom: 0; margin: 25px;
+}
+
+.ui-widget{
+    position: relative; left: 0;right: 0;height: 90%
+}
+
 
 /*  HEADER  */
 header{ width: 100%; height: 160px; position:absolute; top:0px; left:0px; right:0px;overflow:hidden; }
 .logo{ display:inline-block; margin: 10px; }
 .acountbox{ display:inline-block; float:right; margin:20px; }
 .acountbox p{ display:inline-block; }
+.button_big{ margin-left:10px; padding:6px 12px; }
 
 /*  TABBAR  */
-.menu-top{ position: absolute;top: 113px; }
+.menu-top{ position: absolute;top: 0px; }
 .menu-top ul{ margin: 10px 0 0 370px; }
 .menu-top li{
     display:inline;
@@ -42,105 +58,26 @@ header{ width: 100%; height: 160px; position:absolute; top:0px; left:0px; right:
     background-color:#f8f3ec;
     margin-right: 5px;
 }
-.menu-top  a
-{
-    cursor: pointer;
-    font-weight:800;
-    padding-right: 10px;
-    color: #404040;
-}
-.menu-top  a:hover
-{
-    cursor: pointer;
-    text-decoration: none;
-    color: #404040;
-}
-.menu-top .selected
-{
-    background-color: white;
-    color: #404040;
-    padding-bottom: 14px;
-}
-.menu-top .selected:hover
-{
-    background-color: white;
-    cursor: default;
-}
-.menu-top li:hover
-{
-    background-color: #f9f9f9;
-    text-decoration: none;
-    cursor: hand;
-}
+.menu-top  a{cursor: pointer; font-weight:800; padding-right: 10px; color: #404040; }
+.menu-top  a:hover{ cursor: pointer; text-decoration: none; color: #404040;}
+.menu-top .selected{ background-color: white; color: #404040; padding-bottom: 14px;}
+.menu-top .selected:hover{ background-color: white; cursor: default;}
+.menu-top li:hover{ background-color: #f9f9f9; text-decoration: none; cursor: hand;}
+.close {float: none;}
 
-/*  MAIN MENU  */
-.menu-left{ position: absolute;  top: 160px;}
+
+/*  MAIN MENU LEFT */
+.menu-left{ position: absolute;  top: 45px;}
 .menu-left ul{ margin: 0 }
 .menu-left li{ list-style: none; line-height: 55px;width: 315px;background-color: #f9f9f9; margin-bottom: 5px;cursor: pointer; padding: 0px 15px; color: Background }
 .menu-left li:hover{ background-color: #f8f3ec }
 .menu-left .selected{ background-color:white;color: black;width: 320px;font-weight: bold}
 .menu-left .selected:hover{ background-color:white}
 .menu-left .menu-sub-title{ padding: 10px;margin: 0;font-weight: 800}
-.button_big{
-    margin-left:15px;
-    padding:10px 20px;
-    border-radius:5px;
-    background-color:#1E4589;
-    color:white;
-}
-.button_big:hover{
-    color:wheat;
-    text-decoration: none;
-}
-.content{
-  background-color:#fff;
-  padding: 20px;
-  position:absolute; top:160px; bottom:0px; left:350px; right:0px; overflow:auto;
-
-}
 
 
-table { border-collapse: collapse; border: 1px solid #CCB; width: 100%; }
-table td, table th { padding: 5px; border: 1px solid #E0E0E0; }
-table th { background: #E5E5E5; text-align: left; }
-table tr:hover { background-color: #EFF8FB }
-input.invalid { background: red; color: #FDFDFD; }
+.content{background-color:#fff;position:absolute; top:45px; bottom:0px; left:350px; right:0px; overflow:auto;}
 
-
-.loginform{
-  margin-left:20px;
-  margin-right:20px;
-}
-
-.alert {
-  margin-bottom: 10px !important;
-  margin-top: 10px !important;
-}
-
-.close {
-    float: none;
-}
-
-.icon_sort{
-    background-position: -128px 0;
-}
-.icon_arrow_down{
-     background-position: 0 -16px;
- }
-.icon_arrow_up{
-    background-position: -64px -16px;
-}
-
-.icon{
-    background-image: url(http://www.datatables.net/media/css/jui_themes/smoothness/images/ui-icons_888888_256x240.png);
-    display: block;
-    text-indent: -99999px;
-    overflow: hidden;
-    background-repeat: no-repeat;
-    width: 16px;
-    height: 16px;
-    cursor: pointer;
-}
 
 .right{
     float: right;
@@ -183,8 +120,7 @@ input.invalid { background: red; color: #FDFDFD; }
     left: 400px;
 }
 
-.placeholder{display: inline-block; width: 125px;
-}
+.placeholder{display: inline-block; width: 125px;}
 
 .front-signup h2, .front-signin h2 {
     font-size: 16px;

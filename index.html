@@ -30,7 +30,17 @@
     </script>
 </head>
 <body class="simpleApp">
+    <header style="display: none" id="header">
+        <div class="logo">
+            <img src="assets/images/dog_cat.png"/>
+        </div>
 
-    <div id="mainViewStack" class="viewStack" style="position:relative"/>
+        <div class="acountbox">
+            <p> Logged in as: <a id="txt_username" href="#account">Pieter</a></p>
+            <button id="button_logout" class="button_big btn btn-danger btn-navbar">Log Out</button>
+        </div>
+    </header>
+
+    <div id="mainViewStack" class="viewStack mainViewStack"/>
 </body>
 </html>
