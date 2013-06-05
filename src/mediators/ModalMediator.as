@@ -24,8 +24,8 @@ public class ModalMediator extends AbstractMediator {
         appBus.showModal.remove(openModal);
     }
 
-    private function openModal(url:String, title:String):void {
-        this.title.html(title);
+    private function openModal(url:String, titleString:String):void {
+        title.html(titleString);
         modal.modal();
     }
 }
