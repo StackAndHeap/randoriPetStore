@@ -92,8 +92,16 @@ public class DropDown extends AbstractBehavior {
 
     private function renderViewState(node:JQuery):void {
         var paragraph:JQuery = JQueryStatic.J("<p></p>");
+        paragraph.css3("width", "100%");
         paragraph.click(gotoEditState);
-        paragraph.html(_label + ": " + _value);
+        paragraph.html("<b>" + _label + ": </b>" + _value);
+
+        var button:JQuery = JQueryStatic.J("<i></i>");
+        button.addClass1("icon-edit");
+        button.addClass1("pull-right");
+        button.css3("cursor", "pointer");
+        paragraph.append(button);
+
         node.append(paragraph);
     }
 

@@ -96,10 +96,28 @@ public class TextArea extends AbstractBehavior {
     }
 
     private function renderViewState(node:JQuery):void {
+        var div:JQuery = JQueryStatic.J("<div></div>");
+        div.css3("width", "100%");
+        div.css3("display", "inline");
+        div.css3("vertical-align", "top");
+        div.click(gotoEditState);
+
+        var label:JQuery = JQueryStatic.J("<p></p>");
+        label.html("<b>" + _label + ": " + "</b>");
+        div.append(label);
+
         var paragraph:JQuery = JQueryStatic.J("<p></p>");
-        paragraph.click(gotoEditState);
-        paragraph.html(_label + ": " + _value);
-        node.append(paragraph);
+        paragraph.html(_value);
+        div.append(paragraph);
+
+        var button:JQuery = JQueryStatic.J("<i></i>");
+        button.addClass1("icon-edit");
+        button.addClass1("pull-right");
+        button.css3("cursor", "pointer");
+        button.css3("vertical-align", "top");
+        div.append(button);
+
+        node.append(div);
     }
 
     private function gotoEditState(e:Event):void {
