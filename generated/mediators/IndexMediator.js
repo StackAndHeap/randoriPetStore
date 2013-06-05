@@ -1,4 +1,4 @@
-/** Compiled by the Randori compiler v0.2.4 on Wed Jun 05 10:13:17 CEST 2013 */
+/** Compiled by the Randori compiler v0.2.4 on Wed Jun 05 10:27:05 CEST 2013 */
 
 if (typeof mediators == "undefined")
 	var mediators = {};
@@ -38,6 +38,7 @@ mediators.IndexMediator.prototype.login = function(userName) {
 };
 
 mediators.IndexMediator.prototype.logoutClickHandler = function(e) {
+	this.header.css("display", "none");
 	localStorage.setItem("loggedin", "false");
 	this.appBus.logout.dispatch();
 };
