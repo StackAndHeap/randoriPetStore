@@ -28,7 +28,5 @@ public class ModalMediator extends AbstractMediator {
         this.title.html(title);
         modal.modal();
     }
-
-
 }
 }
