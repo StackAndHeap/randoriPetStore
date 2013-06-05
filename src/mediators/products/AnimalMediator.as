@@ -7,7 +7,6 @@ import models.Animal;
 
 import randori.behaviors.AbstractMediator;
 import randori.jquery.JQuery;
-import randori.webkit.html.HTMLInputElement;
 
 import services.MockAnimalService;
 
@@ -16,6 +15,7 @@ public class AnimalMediator extends AbstractMediator {
     [View] public var gridContainer:JQuery;
     [View] public var filter:JQuery;
     [View] public var addBtn:JQuery;
+
     [Inject] public var animalService:MockAnimalService;
     [Inject] public var appBus:AppEventBus;
 
@@ -24,16 +24,20 @@ public class AnimalMediator extends AbstractMediator {
     override protected function onRegister():void {
         filter.keyup1( filterData );
         animalService.getAll().then( handleResult );
+        appBus.reloadData.add(reloadData);
         addBtn.click(addBtnClickedHandler);
     }
 
+    private function reloadData():void {
+        animalService.get( filter.val() ).then( handleResult );
+    }
+
     private function addBtnClickedHandler(e:randori.jquery.Event):void {
-        appBus.showModal.dispatch("","dit is een titel");
+        appBus.showModal.dispatch("views/content/products/animal-new.html","New animal");
     }
 
     private function filterData(event:randori.jquery.Event):void{
-        var input:HTMLInputElement = event.target as HTMLInputElement;
-        animalService.get( input.value ).then( handleResult );
+        animalService.get( filter.val() ).then( handleResult );
     }
 
     private function handleResult( result:Array ):void {
@@ -46,9 +50,8 @@ public class AnimalMediator extends AbstractMediator {
         var col4:Column = new Column("animal", "Animal", "animal" );
         var col6:Column = new Column("gender", "Gender", "gender" );
         var col7:Column = new Column("about", "About", "about" );
-        var col8:Column = new Column("registered", "Registered", "registered" );
 
-        var columns:Array = [col1,col2,col4,col6,col7,col8];
+        var columns:Array = [col1,col2,col4,col6,col7];
 
         var options:Options = new Options();
         options.enableCellNavigation = true;

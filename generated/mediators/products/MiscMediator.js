@@ -1,4 +1,4 @@
-/** Compiled by the Randori compiler v0.2.4 on Wed Jun 05 10:20:55 CEST 2013 */
+/** Compiled by the Randori compiler v0.2.4 on Wed Jun 05 14:12:47 CEST 2013 */
 
 if (typeof mediators == "undefined")
 	var mediators = {};
@@ -7,9 +7,10 @@ if (typeof mediators.products == "undefined")
 
 mediators.products.MiscMediator = function() {
 	this.miscService = null;
+	this.gridContainer = null;
 	this.appBus = null;
 	this.grid = null;
-	this.gridContainer = null;
+	this.addBtn = null;
 	this.filter = null;
 	randori.behaviors.AbstractMediator.call(this);
 	
@@ -18,11 +19,20 @@ mediators.products.MiscMediator = function() {
 mediators.products.MiscMediator.prototype.onRegister = function() {
 	this.filter.keyup($createStaticDelegate(this, this.filterData));
 	this.miscService.getAll().then($createStaticDelegate(this, this.handleResult));
+	this.addBtn.click($createStaticDelegate(this, this.addBtnClickedHandler));
+	this.appBus.reloadData.add($createStaticDelegate(this, this.reloadDataHandler));
+};
+
+mediators.products.MiscMediator.prototype.reloadDataHandler = function() {
+	this.miscService.get(this.filter.val()).then($createStaticDelegate(this, this.handleResult));
+};
+
+mediators.products.MiscMediator.prototype.addBtnClickedHandler = function(e) {
+	this.appBus.showModal.dispatch("views\/content\/products\/misc-new.html", "New misc");
 };
 
 mediators.products.MiscMediator.prototype.filterData = function(event) {
-	var input = event.target;
-	this.miscService.get(input.value).then($createStaticDelegate(this, this.handleResult));
+	this.miscService.get(this.filter.val()).then($createStaticDelegate(this, this.handleResult));
 };
 
 mediators.products.MiscMediator.prototype.loadGrid = function(result) {
@@ -31,8 +41,7 @@ mediators.products.MiscMediator.prototype.loadGrid = function(result) {
 	var col3 = {id:"picture", name:"Picture", field:"picture", sortable:true, formatter:null};
 	var col4 = {id:"quantity", name:"quantity", field:"quantity", sortable:true, formatter:null};
 	var col5 = {id:"about", name:"about", field:"about", sortable:true, formatter:null};
-	var col6 = {id:"added", name:"added", field:"added", sortable:true, formatter:null};
-	var columns = [col1, col2, col4, col5, col6];
+	var columns = [col1, col2, col4, col5];
 	var options = {};
 	options.forceFitColumns = true;
 	options.enableCellNavigation = true;
@@ -80,6 +89,7 @@ mediators.products.MiscMediator.injectionPoints = function(t) {
 			p = randori.behaviors.AbstractMediator.injectionPoints(t);
 			p.push({n:'gridContainer'});
 			p.push({n:'filter'});
+			p.push({n:'addBtn'});
 			break;
 		default:
 			p = [];

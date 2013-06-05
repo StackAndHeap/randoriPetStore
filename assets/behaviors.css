@@ -39,7 +39,12 @@
 .modalFragment {
     -randori-mediator: "mediators.ModalMediator";
 }
-
+.newAnimalMediator {
+    -randori-mediator: "mediators.products.NewAnimalMediator";
+}
+.newMiscMediator {
+    -randori-mediator: "mediators.products.NewMiscMediator";
+}
 /* Fragments */
 .loginFragment {
     -randori-fragment: "fragments/LoginFragment.html";

@@ -99,5 +99,20 @@ public class MockAnimalService {
             }
         }
     }
+
+    public function addNew(animal:Animal):Promise {
+        var lastAnimal:Animal = _data[(_data.length-1)];
+        animal.id = lastAnimal.id + 1;
+        animal.picture = "http://placehold.it/512x512";
+        animal.picture_large = "http://placehold.it/512x512";
+        _data[_data.length] = animal;
+        var promise:Promise = new Promise();
+        var timer:Timer = new Timer(20, 1);
+        timer.timerTick.add(function ():void {
+            promise.resolve(true);
+        });
+        timer.start();
+        return promise;
+    }
 }
 }

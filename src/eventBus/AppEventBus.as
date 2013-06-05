@@ -13,6 +13,8 @@ public class AppEventBus {
 
     [Inject] public var showModal:SimpleSignal;
 
+    [Inject] public var reloadData:SimpleSignal;
+
     public function AppEventBus() {}
 }
 }

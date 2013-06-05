@@ -95,5 +95,20 @@ public class MockMiscService {
 
         return promise;
     }
+
+    public function addNew(misc:Misc):Promise {
+        var lastMisc:Misc = _data[(_data.length-1)];
+        misc.id = lastMisc.id + 1;
+        misc.picture = "http://placehold.it/512x512";
+        misc.picture_large = "http://placehold.it/512x512";
+        _data[_data.length] = misc;
+        var promise:Promise = new Promise();
+        var timer:Timer = new Timer(20, 1);
+        timer.timerTick.add(function ():void {
+            promise.resolve(true);
+        });
+        timer.start();
+        return promise;
+    }
 }
 }

@@ -7,7 +7,6 @@ import models.Misc;
 
 import randori.behaviors.AbstractMediator;
 import randori.jquery.JQuery;
-import randori.webkit.html.HTMLInputElement;
 
 import services.MockMiscService;
 
@@ -17,6 +16,7 @@ public class MiscMediator extends AbstractMediator {
     public var gridContainer:JQuery;
     [View]
     public var filter:JQuery;
+    [View] public var addBtn:JQuery;
     [Inject]
     public var miscService:MockMiscService;
     [Inject]
@@ -27,11 +27,20 @@ public class MiscMediator extends AbstractMediator {
     override protected function onRegister():void {
         filter.keyup1( filterData );
         miscService.getAll().then( handleResult );
+        addBtn.click(addBtnClickedHandler);
+        appBus.reloadData.add(reloadDataHandler);
+    }
+
+    private function reloadDataHandler():void {
+        miscService.get(filter.val()).then( handleResult );
+    }
+
+    private function addBtnClickedHandler(e:randori.jquery.Event):void {
+        appBus.showModal.dispatch("views/content/products/misc-new.html", "New misc");
     }
 
     private function filterData(event:randori.jquery.Event):void{
-        var input:HTMLInputElement = event.target as HTMLInputElement;
-        miscService.get( input.value ).then( handleResult );
+        miscService.get(filter.val()).then( handleResult );
     }
 
     protected function loadGrid( result:Array ):void {
@@ -40,9 +49,8 @@ public class MiscMediator extends AbstractMediator {
         var col3:Column = new Column( "picture", "Picture", "picture" );
         var col4:Column = new Column( "quantity", "quantity", "quantity" );
         var col5:Column = new Column( "about", "about", "about" );
-        var col6:Column = new Column( "added", "added", "added" );
 
-        var columns:Array = [col1,col2 ,col4,col5,col6];
+        var columns:Array = [col1,col2 ,col4,col5];
 
         var options:Options = new Options();
         options.forceFitColumns = true;
