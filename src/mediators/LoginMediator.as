@@ -67,7 +67,7 @@ public class LoginMediator extends AbstractMediator {
             i:uint = 0;
 
         for(i;i<length;i++){
-            var string = inputs[i].val() || "";
+            var string:String = inputs[i].val() || "";
             if(string.replace(" ","") == "")
                 valid = false;
         }
