@@ -45,6 +45,10 @@
 .newMiscMediator {
     -randori-mediator: "mediators.products.NewMiscMediator";
 }
+.statsView{
+    -randori-mediator: "mediators.stats.StatsMediator";
+}
+
 /* Fragments */
 .loginFragment {
     -randori-fragment: "fragments/LoginFragment.html";
