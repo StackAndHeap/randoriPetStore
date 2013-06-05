@@ -39,6 +39,9 @@
 .modalFragment {
     -randori-mediator: "mediators.ModalMediator";
 }
+.statsView{
+    -randori-mediator: "mediators.stats.StatsMediator";
+}
 
 /* Fragments */
 .loginFragment {

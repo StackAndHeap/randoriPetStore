@@ -157,8 +157,13 @@ public class ContentMediator extends AbstractMediator {
         processingOrdersBtn.label = "Processing Orders";
         processingOrdersBtn.route = "processingOrders";
         processingOrdersBtn.url = "views/content/products/animals.html";
+        var statsButton:MenuListItem = new MenuListItem();
+        statsButton.id = "statsButton";
+        statsButton.label = "Statistics";
+        statsButton.route = "statistics";
+        statsButton.url = "views/content/stats/stats.html";
 
-        return [animalsBtn,miscBtn,closedOrdersBtn,processingOrdersBtn];
+        return [animalsBtn,miscBtn,closedOrdersBtn,processingOrdersBtn,statsButton];
     }
 }
 }
